@@ -1,6 +1,27 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import math
 
+class Buttons:
+    def __init__(self):
+        pass
+
+    def number_button(self, x, y, a, b, obj_name, cw):
+
+        self.btn = QtWidgets.QPushButton(cw)
+        self.btn.setGeometry(QtCore.QRect(x, y, a, b))
+        font = QtGui.QFont()
+
+        self.main_window_obj = Ui_MainWindow()
+
+        font.setFamily(self.main_window_obj.btn_font_style())
+        font.setPointSize(self.main_window_obj.btn_font_size())
+        self.btn.setFont(font)
+        self.btn.setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(23, 255, 110);")
+        self.btn.setObjectName(obj_name)
+
+        return self.btn
+
+
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
 
@@ -21,95 +42,20 @@ class Ui_MainWindow(object):
         self.label_result.setStyleSheet("background-color: rgb(255, 255, 255);")
         self.label_result.setObjectName("label_result")
 
-        self.btn_1 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_1.setGeometry(QtCore.QRect(0, 122, 40, 40))
-        font = QtGui.QFont()
-        font.setFamily(self.btn_font_style())
-        font.setPointSize(self.btn_font_size())
-        self.btn_1.setFont(font)
-        self.btn_1.setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(23, 255, 110);")
-        self.btn_1.setObjectName("btn_1")
+        cw = self.centralwidget
+        btn_object = Buttons()
 
-        self.btn_2 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_2.setGeometry(QtCore.QRect(41, 122, 40, 40))
-        font = QtGui.QFont()
-        font.setFamily(self.btn_font_style())
-        font.setPointSize(self.btn_font_size())
-        self.btn_2.setFont(font)
-        self.btn_2.setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(23, 255, 110);")
-        self.btn_2.setObjectName("btn_2")
+        self.button_1 = btn_object.number_button(0, 122, 40, 40, 'btn 1', cw)
+        self.button_2 = btn_object.number_button(41, 122, 40, 40, 'btn 2', cw)
+        self.button_3 = btn_object.number_button(82, 122, 40, 40, 'btn 3', cw)
+        self.button_4 = btn_object.number_button(0, 81, 40, 40, 'btn 4', cw)
+        self.button_5 = btn_object.number_button(41, 81, 40, 40, 'btn 5', cw)
+        self.button_6 = btn_object.number_button(82, 81, 40, 40, 'btn 6', cw)
+        self.button_7 = btn_object.number_button(0, 40, 40, 40, 'btn 7', cw)
+        self.button_8 = btn_object.number_button(41, 40, 40, 40, 'btn 8', cw)
+        self.button_9 = btn_object.number_button(82, 40, 40, 40, 'btn 9', cw)
+        self.button_0 = btn_object.number_button(0, 163, 40, 40, 'btn 0', cw)
 
-        self.btn_3 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_3.setGeometry(QtCore.QRect(82, 122, 40, 40))
-        font = QtGui.QFont()
-        font.setFamily(self.btn_font_style())
-        font.setPointSize(self.btn_font_size())
-        self.btn_3.setFont(font)
-        self.btn_3.setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(23, 255, 110);")
-        self.btn_3.setObjectName("btn_3")
-
-        self.btn_6 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_6.setGeometry(QtCore.QRect(82, 81, 40, 40))
-        font = QtGui.QFont()
-        font.setFamily(self.btn_font_style())
-        font.setPointSize(self.btn_font_size())
-        self.btn_6.setFont(font)
-        self.btn_6.setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(23, 255, 110);")
-        self.btn_6.setObjectName("btn_6")
-
-        self.btn_5 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_5.setGeometry(QtCore.QRect(41, 81, 40, 40))
-        font = QtGui.QFont()
-        font.setFamily(self.btn_font_style())
-        font.setPointSize(self.btn_font_size())
-        self.btn_5.setFont(font)
-        self.btn_5.setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(23, 255, 110);")
-        self.btn_5.setObjectName("btn_5")
-
-        self.btn_4 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_4.setGeometry(QtCore.QRect(0, 81, 40, 40))
-        font = QtGui.QFont()
-        font.setFamily(self.btn_font_style())
-        font.setPointSize(self.btn_font_size())
-        self.btn_4.setFont(font)
-        self.btn_4.setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(23, 255, 110);")
-        self.btn_4.setObjectName("btn_4")
-
-        self.btn_9 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_9.setGeometry(QtCore.QRect(82, 40, 40, 40))
-        font = QtGui.QFont()
-        font.setFamily(self.btn_font_style())
-        font.setPointSize(self.btn_font_size())
-        self.btn_9.setFont(font)
-        self.btn_9.setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(23, 255, 110);")
-        self.btn_9.setObjectName("btn_9")
-
-        self.btn_8 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_8.setGeometry(QtCore.QRect(41, 40, 40, 40))
-        font = QtGui.QFont()
-        font.setFamily(self.btn_font_style())
-        font.setPointSize(self.btn_font_size())
-        self.btn_8.setFont(font)
-        self.btn_8.setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(23, 255, 110);")
-        self.btn_8.setObjectName("btn_8")
-
-        self.btn_7 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_7.setGeometry(QtCore.QRect(0, 40, 40, 40))
-        font = QtGui.QFont()
-        font.setFamily(self.btn_font_style())
-        font.setPointSize(self.btn_font_size())
-        self.btn_7.setFont(font)
-        self.btn_7.setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(23, 255, 110);")
-        self.btn_7.setObjectName("btn_7")
-
-        self.btn_0 = QtWidgets.QPushButton(self.centralwidget)
-        self.btn_0.setGeometry(QtCore.QRect(0, 163, 40, 40))
-        font = QtGui.QFont()
-        font.setFamily(self.btn_font_style())
-        font.setPointSize(self.btn_font_size())
-        self.btn_0.setFont(font)
-        self.btn_0.setStyleSheet("background-color: rgb(0, 0, 0); color: rgb(23, 255, 110);")
-        self.btn_0.setObjectName("btn_0")
 
         self.btn_plus = QtWidgets.QPushButton(self.centralwidget)
         self.btn_plus.setGeometry(QtCore.QRect(123, 40, 40, 40))
@@ -284,16 +230,18 @@ class Ui_MainWindow(object):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Калькулятор"))
         self.label_result.setText(_translate("MainWindow", "0"))
-        self.btn_1.setText(_translate("MainWindow", "1"))
-        self.btn_2.setText(_translate("MainWindow", "2"))
-        self.btn_3.setText(_translate("MainWindow", "3"))
-        self.btn_6.setText(_translate("MainWindow", "6"))
-        self.btn_5.setText(_translate("MainWindow", "5"))
-        self.btn_4.setText(_translate("MainWindow", "4"))
-        self.btn_9.setText(_translate("MainWindow", "9"))
-        self.btn_8.setText(_translate("MainWindow", "8"))
-        self.btn_7.setText(_translate("MainWindow", "7"))
-        self.btn_0.setText(_translate("MainWindow", "0"))
+
+        self.button_1.setText(_translate("MainWindow", "1"))
+        self.button_2.setText(_translate("MainWindow", "2"))
+        self.button_3.setText(_translate("MainWindow", "3"))
+        self.button_4.setText(_translate("MainWindow", "4"))
+        self.button_5.setText(_translate("MainWindow", "5"))
+        self.button_6.setText(_translate("MainWindow", "6"))
+        self.button_7.setText(_translate("MainWindow", "7"))
+        self.button_8.setText(_translate("MainWindow", "8"))
+        self.button_9.setText(_translate("MainWindow", "9"))
+        self.button_0.setText(_translate("MainWindow", "0"))
+
         self.btn_plus.setText(_translate("MainWindow", "+"))
         self.btn_minus.setText(_translate("MainWindow", "-"))
         self.btn_multy.setText(_translate("MainWindow", "*"))
@@ -316,16 +264,17 @@ class Ui_MainWindow(object):
         #self.btn_cube.setText(_translate("MainWindow", "x^3"))
 
     def add_functions(self):
-        self.btn_0.clicked.connect(lambda: self.write_number(self.btn_0.text()))
-        self.btn_1.clicked.connect(lambda: self.write_number(self.btn_1.text()))
-        self.btn_2.clicked.connect(lambda: self.write_number(self.btn_2.text()))
-        self.btn_3.clicked.connect(lambda: self.write_number(self.btn_3.text()))
-        self.btn_4.clicked.connect(lambda: self.write_number(self.btn_4.text()))
-        self.btn_5.clicked.connect(lambda: self.write_number(self.btn_5.text()))
-        self.btn_6.clicked.connect(lambda: self.write_number(self.btn_6.text()))
-        self.btn_7.clicked.connect(lambda: self.write_number(self.btn_7.text()))
-        self.btn_8.clicked.connect(lambda: self.write_number(self.btn_8.text()))
-        self.btn_9.clicked.connect(lambda: self.write_number(self.btn_9.text()))
+        self.button_1.clicked.connect(lambda: self.write_number(self.button_1.text()))
+        self.button_2.clicked.connect(lambda: self.write_number(self.button_2.text()))
+        self.button_3.clicked.connect(lambda: self.write_number(self.button_3.text()))
+        self.button_4.clicked.connect(lambda: self.write_number(self.button_4.text()))
+        self.button_5.clicked.connect(lambda: self.write_number(self.button_5.text()))
+        self.button_6.clicked.connect(lambda: self.write_number(self.button_6.text()))
+        self.button_7.clicked.connect(lambda: self.write_number(self.button_7.text()))
+        self.button_8.clicked.connect(lambda: self.write_number(self.button_8.text()))
+        self.button_9.clicked.connect(lambda: self.write_number(self.button_9.text()))
+        self.button_0.clicked.connect(lambda: self.write_number(self.button_0.text()))
+
         self.btn_plus.clicked.connect(lambda: self.write_number(self.btn_plus.text()))
         self.btn_minus.clicked.connect(lambda: self.write_number(self.btn_minus.text()))
         self.btn_multy.clicked.connect(lambda: self.write_number(self.btn_multy.text()))
