@@ -1,12 +1,12 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import math
+import re
 
 class Buttons:
     def __init__(self):
         pass
 
     def number_button(self, x, y, a, b, obj_name, cw):
-
         self.btn = QtWidgets.QPushButton(cw)
         self.btn.setGeometry(QtCore.QRect(x, y, a, b))
         font = QtGui.QFont()
@@ -87,7 +87,7 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "Калькулятор"))
-        self.label_result.setText(_translate("MainWindow", "0"))
+        self.label_result.setText(_translate("MainWindow", ""))
 
         self.button_1.setText(_translate("MainWindow", "1"))
         self.button_2.setText(_translate("MainWindow", "2"))
@@ -134,10 +134,11 @@ class Ui_MainWindow(object):
         self.button_9.clicked.connect(lambda: self.write_number(self.button_9.text()))
         self.button_0.clicked.connect(lambda: self.write_number(self.button_0.text()))
 
-        self.button_plus.clicked.connect(lambda: self.write_number(self.button_plus.text()))
-        self.button_minus.clicked.connect(lambda: self.write_number(self.button_minus.text()))
-        self.button_multy.clicked.connect(lambda: self.write_number(self.button_multy.text()))
-        self.button_divid.clicked.connect(lambda: self.write_number(self.button_divid.text()))
+        self.button_plus.clicked.connect(lambda: self.write_math_symbol(self.button_plus.text()))
+        self.button_minus.clicked.connect(lambda: self.write_math_symbol(self.button_minus.text()))
+        self.button_multy.clicked.connect(lambda: self.write_math_symbol(self.button_multy.text()))
+        self.button_divid.clicked.connect(lambda: self.write_math_symbol(self.button_divid.text()))
+
         self.button_dot.clicked.connect(lambda: self.write_number(self.button_dot.text()))
         self.button_degree.clicked.connect(lambda: self.write_number(self.button_degree.text()))
         self.button_bracket1.clicked.connect(lambda: self.write_number(self.button_bracket1.text()))
@@ -155,18 +156,34 @@ class Ui_MainWindow(object):
         self.button_equal.clicked.connect(self.results)
         self.button_clean.clicked.connect(self.clean_results)
 
+    def write_math_symbol(self, symbol):
+        lbl_str = self.label_result.text()
+        symbol_pattern = ['+', '-', '/', '*']
+        tmp = list(lbl_str)
+        if tmp[-1] in symbol_pattern:
+            tmp[-1] = symbol
+            lbl_str = ''.join(tmp)
+            self.label_result.setText(lbl_str)
+        else:
+            self.label_result.setText(self.label_result.text() + symbol)
+        return 0
+
     def write_number(self, number):
         if self.label_result.text()=="0":
             self.label_result.setText(number)
         else:
             self.label_result.setText(self.label_result.text()+number)
 
+
     def results(self):
+        stroka = self.label_result.text()
+        print(f'{stroka} length = {len(stroka)}')
         res=eval(self.label_result.text())
         self.label_result.setText(str(res))
+        print(self.label_result.text()[-1])
 
     def clean_results(self):
-        self.label_result.setText("0")
+        self.label_result.setText("")
 
     def btn_font_style(self):
         b_fnt_stl="Arial"
