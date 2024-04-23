@@ -159,13 +159,16 @@ class Ui_MainWindow(object):
     def write_math_symbol(self, symbol):
         lbl_str = self.label_result.text()
         symbol_pattern = ['+', '-', '/', '*']
-        tmp = list(lbl_str)
-        if tmp[-1] in symbol_pattern:
-            tmp[-1] = symbol
-            lbl_str = ''.join(tmp)
-            self.label_result.setText(lbl_str)
-        else:
+        if lbl_str == '':
             self.label_result.setText(self.label_result.text() + symbol)
+        elif lbl_str != '':
+            lbl_str_list = list(lbl_str)
+            if lbl_str_list[-1] in symbol_pattern:
+                lbl_str_list[-1] = symbol
+                lbl_str = ''.join(lbl_str_list)
+                self.label_result.setText(lbl_str)
+            else:
+                self.label_result.setText(self.label_result.text() + symbol)
         return 0
 
     def write_number(self, number):
@@ -176,11 +179,47 @@ class Ui_MainWindow(object):
 
 
     def results(self):
+        label_str = self.label_result.text()
+        label_str_list_0 = list(label_str)
+        label_str_list_1 = []
+
+        tmp = '' # Пустой буфер
+        for i in label_str_list_0: # Цикл в списке из строки label_result
+            if i.isdigit() == True: # Если элемент число
+                if tmp == '': # Если буфер пустой
+                    tmp = tmp + i
+                elif tmp != '': # Если буфер НЕ пустой
+                    if tmp.isdigit() == True: # Если буфер число
+                        tmp = tmp + i
+                    elif tmp.isdigit() == False: # Если буфер НЕ число
+                        label_str_list_1.append(tmp)
+                        tmp = ''
+                        tmp = tmp + i
+                print(True)
+            elif i.isdigit() == False: # Если элемент НЕ число
+                if tmp != '': # Если буфер НЕ пустой
+                    if tmp.isdigit() == False: # Если буфер НЕ число
+                        label_str_list_1.append(tmp)
+                        tmp = ''
+                        tmp = tmp + i
+                    elif tmp.isdigit() == True: # Если буфер число
+                        label_str_list_1.append(tmp)
+                        tmp = ''
+                        tmp = tmp + i
+                elif tmp == '': # Если буфер пустой
+                    tmp = tmp + i
+
+                print(False)
+        if(tmp != ''):
+            label_str_list_1.append(tmp)
+
+        print(f'{label_str}\n{label_str_list_0}\n{label_str_list_1}')
+
+
         stroka = self.label_result.text()
-        print(f'{stroka} length = {len(stroka)}')
         res=eval(self.label_result.text())
         self.label_result.setText(str(res))
-        print(self.label_result.text()[-1])
+        return 0
 
     def clean_results(self):
         self.label_result.setText("")
