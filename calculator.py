@@ -211,23 +211,34 @@ class Ui_MainWindow(object):
             label_str_list_1.append(tmp)
         print(f'{label_str}\n{label_str_list_0}\n{label_str_list_1}')
 
-        bracket_count = 0
-        sub_label_str = []
-        length_list = len(label_str_list_1)
-        for i in range(length_list):
-            if label_str_list_1[i] == '(':
-                bracket_count += 1
-                if bracket_count == 1:
-                    opened_bracket_ind = i
-            elif label_str_list_1[i] == ')':
-                bracket_count -= 1
-                if bracket_count == 0:
-                    closed_bracket_ind = i
-            print(f'bracket count = {bracket_count}, ind = {i} -> {label_str_list_1[i]}')
 
-        print(f'opened bracket ind={opened_bracket_ind}\nclosed bracket ind={closed_bracket_ind}')
-        sub_label_str = sub_label_str + label_str_list_1[opened_bracket_ind+1:closed_bracket_ind]
-        print(sub_label_str)
+        sub_label_list = label_str_list_1
+        bracket_bool = True
+        while(bracket_bool == True):
+            if '(' in sub_label_list:
+                bracket_count = 0
+                sub_length_list = len(sub_label_list)
+                for i in range(sub_length_list):
+                    if sub_label_list[i] == '(': # Поиск первой круглой скобочки
+                        bracket_count += 1
+                        if bracket_count == 1:
+                            opened_bracket_ind = i
+                    elif sub_label_list[i] == ')': # Поиск второй круглой скобочки
+                        bracket_count -= 1
+                        if bracket_count == 0:
+                            closed_bracket_ind = i
+                    print(f'bracket count = {bracket_count}, ind = {i} -> {sub_label_list[i]}')
+
+                print(f'opened bracket ind={opened_bracket_ind}\nclosed bracket ind={closed_bracket_ind}')
+                tmp_list = []
+                tmp_list = tmp_list + sub_label_list[opened_bracket_ind + 1:closed_bracket_ind]
+                sub_label_list = []
+                sub_label_list = sub_label_list + tmp_list
+                print(sub_label_list)
+
+            else:
+                bracket_bool = False
+                pass
 
 
 
