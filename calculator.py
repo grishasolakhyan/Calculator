@@ -195,7 +195,6 @@ class Ui_MainWindow(object):
                         label_str_list_1.append(tmp)
                         tmp = ''
                         tmp = tmp + i
-                print(True)
             elif i.isdigit() == False: # Если элемент НЕ число
                 if tmp != '': # Если буфер НЕ пустой
                     if tmp.isdigit() == False: # Если буфер НЕ число
@@ -208,17 +207,33 @@ class Ui_MainWindow(object):
                         tmp = tmp + i
                 elif tmp == '': # Если буфер пустой
                     tmp = tmp + i
-
-                print(False)
         if(tmp != ''):
             label_str_list_1.append(tmp)
-
         print(f'{label_str}\n{label_str_list_0}\n{label_str_list_1}')
 
+        bracket_count = 0
+        sub_label_str = []
+        length_list = len(label_str_list_1)
+        for i in range(length_list):
+            if label_str_list_1[i] == '(':
+                bracket_count += 1
+                if bracket_count == 1:
+                    opened_bracket_ind = i
+            elif label_str_list_1[i] == ')':
+                bracket_count -= 1
+                if bracket_count == 0:
+                    closed_bracket_ind = i
+            print(f'bracket count = {bracket_count}, ind = {i} -> {label_str_list_1[i]}')
 
-        stroka = self.label_result.text()
-        res=eval(self.label_result.text())
-        self.label_result.setText(str(res))
+        print(f'opened bracket ind={opened_bracket_ind}\nclosed bracket ind={closed_bracket_ind}')
+        sub_label_str = sub_label_str + label_str_list_1[opened_bracket_ind+1:closed_bracket_ind]
+        print(sub_label_str)
+
+
+
+        # stroka = self.label_result.text()
+        # res=eval(self.label_result.text())
+        # self.label_result.setText(str(res))
         return 0
 
     def clean_results(self):
