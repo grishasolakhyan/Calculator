@@ -65,15 +65,15 @@ class Ui_MainWindow(object):
         self.button_bracket1 = btn_object.number_button(164, 204, 40, 40, 'btn bracket 1', cw)
         self.button_bracket2 = btn_object.number_button(205, 204, 40, 40, 'btn bracket 2', cw)
 
-        self.button_sin = btn_object.number_button(164, 40, 40, 40, 'btn sin', cw)
-        self.button_cos = btn_object.number_button(164, 81, 40, 40, 'btn cos', cw)
-        self.button_tg = btn_object.number_button(164, 122, 40, 40, 'btn tg2', cw)
-        self.button_asin = btn_object.number_button(205, 40, 40, 40, 'btn asin', cw)
-        self.button_acos = btn_object.number_button(205, 81, 40, 40, 'btn acos', cw)
-        self.button_atg = btn_object.number_button(205, 122, 40, 40, 'btn atg', cw)
-
-        self.button_pi = btn_object.number_button(164, 163, 40, 40, 'btn pi', cw)
-        self.button_e = btn_object.number_button(205, 163, 40, 40, 'btn e', cw)
+        # self.button_sin = btn_object.number_button(164, 40, 40, 40, 'btn sin', cw)
+        # self.button_cos = btn_object.number_button(164, 81, 40, 40, 'btn cos', cw)
+        # self.button_tg = btn_object.number_button(164, 122, 40, 40, 'btn tg2', cw)
+        # self.button_asin = btn_object.number_button(205, 40, 40, 40, 'btn asin', cw)
+        # self.button_acos = btn_object.number_button(205, 81, 40, 40, 'btn acos', cw)
+        # self.button_atg = btn_object.number_button(205, 122, 40, 40, 'btn atg', cw)
+        #
+        # self.button_pi = btn_object.number_button(164, 163, 40, 40, 'btn pi', cw)
+        # self.button_e = btn_object.number_button(205, 163, 40, 40, 'btn e', cw)
 
         self.button_equal = btn_object.number_button(41, 163, 81, 40, 'btn equal', cw)
         self.button_clean = btn_object.number_button(41, 204, 81, 40, 'btn clean', cw)
@@ -109,15 +109,15 @@ class Ui_MainWindow(object):
         self.button_bracket1.setText(_translate("MainWindow", "("))
         self.button_bracket2.setText(_translate("MainWindow", ")"))
 
-        self.button_sin.setText(_translate("MainWindow", "sin"))
-        self.button_cos.setText(_translate("MainWindow", "cos"))
-        self.button_tg.setText(_translate("MainWindow", "tg"))
-        self.button_asin.setText(_translate("MainWindow", "asin"))
-        self.button_acos.setText(_translate("MainWindow", "acos"))
-        self.button_atg.setText(_translate("MainWindow", "atg"))
-
-        self.button_pi.setText(_translate("MainWindow", "π"))
-        self.button_e.setText(_translate("MainWindow", "e"))
+        # self.button_sin.setText(_translate("MainWindow", "sin"))
+        # self.button_cos.setText(_translate("MainWindow", "cos"))
+        # self.button_tg.setText(_translate("MainWindow", "tg"))
+        # self.button_asin.setText(_translate("MainWindow", "asin"))
+        # self.button_acos.setText(_translate("MainWindow", "acos"))
+        # self.button_atg.setText(_translate("MainWindow", "atg"))
+        #
+        # self.button_pi.setText(_translate("MainWindow", "π"))
+        # self.button_e.setText(_translate("MainWindow", "e"))
 
         self.button_equal.setText(_translate("MainWindow", "="))
         self.button_clean.setText(_translate("MainWindow", "C"))
@@ -144,14 +144,15 @@ class Ui_MainWindow(object):
         self.button_bracket1.clicked.connect(lambda: self.write_number(self.button_bracket1.text()))
         self.button_bracket2.clicked.connect(lambda: self.write_number(self.button_bracket2.text()))
 
-        self.button_pi.clicked.connect(self.num_pi)
-        self.button_e.clicked.connect(self.num_e)
-        self.button_sin.clicked.connect(self.btn_sinus)
-        self.button_cos.clicked.connect(self.btn_cosinus)
-        self.button_tg.clicked.connect(self.btn_tangens)
-        self.button_asin.clicked.connect(self.btn_asinus)
-        self.button_acos.clicked.connect(self.btn_acosinus)
-        self.button_atg.clicked.connect(self.btn_atangens)
+        # self.button_sin.clicked.connect(self.btn_sinus)
+        # self.button_cos.clicked.connect(self.btn_cosinus)
+        # self.button_tg.clicked.connect(self.btn_tangens)
+        # self.button_asin.clicked.connect(self.btn_asinus)
+        # self.button_acos.clicked.connect(self.btn_acosinus)
+        # self.button_atg.clicked.connect(self.btn_atangens)
+        #
+        # self.button_pi.clicked.connect(self.num_pi)
+        # self.button_e.clicked.connect(self.num_e)
 
         self.button_equal.clicked.connect(self.results)
         self.button_clean.clicked.connect(self.clean_results)
@@ -179,72 +180,43 @@ class Ui_MainWindow(object):
 
 
     def results(self):
-        label_str = self.label_result.text()
-        label_str_list_0 = list(label_str)
-        label_str_list_1 = []
+        label_str = self.label_result.text() # получение строки выражения из label
 
-        tmp = '' # Пустой буфер
-        for i in label_str_list_0: # Цикл в списке из строки label_result
-            if i.isdigit() == True: # Если элемент число
-                if tmp == '': # Если буфер пустой
-                    tmp = tmp + i
-                elif tmp != '': # Если буфер НЕ пустой
-                    if tmp.isdigit() == True: # Если буфер число
-                        tmp = tmp + i
-                    elif tmp.isdigit() == False: # Если буфер НЕ число
-                        label_str_list_1.append(tmp)
-                        tmp = ''
-                        tmp = tmp + i
-            elif i.isdigit() == False: # Если элемент НЕ число
-                if tmp != '': # Если буфер НЕ пустой
-                    if tmp.isdigit() == False: # Если буфер НЕ число
-                        label_str_list_1.append(tmp)
-                        tmp = ''
-                        tmp = tmp + i
-                    elif tmp.isdigit() == True: # Если буфер число
-                        label_str_list_1.append(tmp)
-                        tmp = ''
-                        tmp = tmp + i
-                elif tmp == '': # Если буфер пустой
-                    tmp = tmp + i
-        if(tmp != ''):
-            label_str_list_1.append(tmp)
-        print(f'{label_str}\n{label_str_list_0}\n{label_str_list_1}')
-
-
-        sub_label_list = label_str_list_1
-        bracket_bool = True
-        while(bracket_bool == True):
-            if '(' in sub_label_list:
-                bracket_count = 0
-                sub_length_list = len(sub_label_list)
-                for i in range(sub_length_list):
-                    if sub_label_list[i] == '(': # Поиск первой круглой скобочки
-                        bracket_count += 1
-                        if bracket_count == 1:
-                            opened_bracket_ind = i
-                    elif sub_label_list[i] == ')': # Поиск второй круглой скобочки
-                        bracket_count -= 1
-                        if bracket_count == 0:
-                            closed_bracket_ind = i
-                    print(f'bracket count = {bracket_count}, ind = {i} -> {sub_label_list[i]}')
-
-                print(f'opened bracket ind={opened_bracket_ind}\nclosed bracket ind={closed_bracket_ind}')
-                tmp_list = []
-                tmp_list = tmp_list + sub_label_list[opened_bracket_ind + 1:closed_bracket_ind]
-                sub_label_list = []
-                sub_label_list = sub_label_list + tmp_list
-                print(sub_label_list)
-
+        if len(label_str) == 0: # если строка пустая
+            print(f'ERROR!') # вывод ошибки в консоль
+        else: # если строка не пустая
+            print(f'{label_str} - {type(label_str)}') # вывод строки выражения из label
+            label_list = list(label_str) # перевод строки в список символов
+            print(label_list)
+            if label_list[0] == '*' or label_list[0] == '/':  # проверка на формат ввода операций умножения и деления в начале выражения
+                print(f'ERROR!')  # вывод ошибки в консоль
             else:
-                bracket_bool = False
-                pass
 
+                len_label_list = len(label_list)
+                while True:
+                    flag1 = True
+                    len_label_list = len(label_list)
+                    for i in range(len_label_list-1): # перебор списка строки выражения по индексу
+                        print(f'Iteration #{i+1}')
+                        if (label_list[i].isdigit() == True and label_list[i+1].isdigit() == True) or \
+                                ('.' in label_list[i] and label_list[i+1].isdigit() == True) or \
+                                (label_list[i].isdigit() == True and '.' in label_list[i+1]):
+                            status = True
+                            print(f'{label_list[i]}[{i}] -> {label_list[i + 1]}[{i + 1}] -> {status}')
+                            label_list[i]+=label_list[i+1]
+                            label_list.pop(i+1)
+                            print(label_list)
+                            flag1 = True
+                            break
+                        else:
+                            status = False
+                            print(f'{label_list[i]}[{i}] -> {label_list[i+1]}[{i+1}] -> {status}')
+                            print(label_list)
+                            flag1 = False
+                            continue
 
-
-        # stroka = self.label_result.text()
-        # res=eval(self.label_result.text())
-        # self.label_result.setText(str(res))
+                    if flag1 == False:
+                        break
         return 0
 
     def clean_results(self):
