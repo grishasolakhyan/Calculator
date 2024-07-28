@@ -197,26 +197,33 @@ class Ui_MainWindow(object):
                     flag1 = True
                     len_label_list = len(label_list)
                     for i in range(len_label_list-1): # перебор списка строки выражения по индексу
-                        print(f'Iteration #{i+1}')
+                        print(f'Iteration #{i+1}') # номер итерации
                         if (label_list[i].isdigit() == True and label_list[i+1].isdigit() == True) or \
                                 ('.' in label_list[i] and label_list[i+1].isdigit() == True) or \
-                                (label_list[i].isdigit() == True and '.' in label_list[i+1]):
-                            status = True
-                            print(f'{label_list[i]}[{i}] -> {label_list[i + 1]}[{i + 1}] -> {status}')
-                            label_list[i]+=label_list[i+1]
-                            label_list.pop(i+1)
+                                (label_list[i].isdigit() == True and '.' in label_list[i+1]): # если два элемента списка подряд идут числа, точка и число или число и точка
+                            print(f'{label_list[i]}[{i}] -> {label_list[i + 1]}[{i + 1}]') # вывод текущего и следующего элементов
+                            label_list[i]+=label_list[i+1] # добавление соседнего символа из следующего в текущий элемент списка
+                            label_list.pop(i+1) # удаление следующего элемента
                             print(label_list)
-                            flag1 = True
+                            flag1 = True # флаг
                             break
                         else:
-                            status = False
-                            print(f'{label_list[i]}[{i}] -> {label_list[i+1]}[{i+1}] -> {status}')
+                            print(f'{label_list[i]}[{i}] -> {label_list[i+1]}[{i+1}]') # вывод текущего и следующего элементов
                             print(label_list)
-                            flag1 = False
+                            flag1 = False # флаг
                             continue
-
                     if flag1 == False:
                         break
+
+                len_label_list = len(label_list)
+                for i in range (len_label_list):
+                    res = any(chr.isdigit() for chr in label_list[i])
+                    if res == True:
+                        if '.' in label_list[i]:
+                            label_list[i] = float(label_list[i])
+                        else:
+                            label_list[i] = int(label_list[i])
+                print(label_list)
         return 0
 
     def clean_results(self):
