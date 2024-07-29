@@ -191,7 +191,6 @@ class Ui_MainWindow(object):
             if label_list[0] == '*' or label_list[0] == '/':  # проверка на формат ввода операций умножения и деления в начале выражения
                 print(f'ERROR!')  # вывод ошибки в консоль
             else:
-
                 len_label_list = len(label_list)
                 while True:
                     flag1 = True
@@ -215,15 +214,34 @@ class Ui_MainWindow(object):
                     if flag1 == False:
                         break
 
-                len_label_list = len(label_list)
-                for i in range (len_label_list):
-                    res = any(chr.isdigit() for chr in label_list[i])
-                    if res == True:
-                        if '.' in label_list[i]:
-                            label_list[i] = float(label_list[i])
+                while True:
+                    flag2 = True
+                    len_label_list = len(label_list)
+                    for i in range(len_label_list-1):
+                        res = any(chr.isdigit() for chr in label_list[i+1])  # проверка наличия цифр в элементе
+                        if(label_list[i] == '+' or label_list[i] == '-') and any(chr.isdigit() for chr in label_list[i+1]) == True:
+                            label_list[i] += label_list[i+1]  # добавление + или минуса
+                            label_list.pop(i+1)  # удаление следующего элемента
+                            flag2 = True
+                            break
                         else:
-                            label_list[i] = int(label_list[i])
+                            flag2 = False
+                            continue
+                    if flag2 == False:
+                        break
                 print(label_list)
+
+                len_label_list = len(label_list)
+                for i in range(len_label_list): # перебор в списке по индексу
+                    res = any(chr.isdigit() for chr in label_list[i]) # проверка наличия цифр в элементе
+                    if res == True:
+                        if '.' in label_list[i]: # если есть точка в числовом элементе
+                            label_list[i] = float(label_list[i]) # перевод в тип float
+                        else:
+                            label_list[i] = int(label_list[i]) # перевод в тип int
+
+                print(label_list)
+
         return 0
 
     def clean_results(self):
