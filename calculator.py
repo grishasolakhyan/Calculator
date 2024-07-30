@@ -248,7 +248,15 @@ class Ui_MainWindow(object):
                         break
 
                     for i in range(len_label_list-1):
-                        if self.isnumeric(label_list[i]) == True and self.isnumeric(label_list[i+1]) == True:
+                        if '*' in label_list: # если есть операция умножения
+                            if i>0 and label_list[i] == '*' and self.isnumeric(label_list[i-1]) == True and self.isnumeric(label_list[i+1]) == True:
+                                print(f'{label_list[i-1]} * {label_list[i+1]}')
+                                label_list[i-1] = label_list[i-1] * label_list[i+1]
+                                del label_list[i:i+2]
+                                print(label_list)
+                                break
+
+                        elif self.isnumeric(label_list[i]) == True and self.isnumeric(label_list[i+1]) == True: # если два элемента подряд просто числа
                             label_list[i]+=label_list[i+1]
                             label_list.pop(i+1)
                             print(label_list)
@@ -259,7 +267,7 @@ class Ui_MainWindow(object):
                 print(f'Result = {final_result}')
         return 0
 
-    def isnumeric(self, obj):
+    def isnumeric(self, obj): # функция проверки на тип(числовой) объекта
         try:
             obj + 0
             return True
