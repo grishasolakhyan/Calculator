@@ -248,7 +248,15 @@ class Ui_MainWindow(object):
                         break
 
                     for i in range(len_label_list-1):
-                        if '*' in label_list: # если есть операция умножения
+                        if '/' in label_list: # если есть операция деления
+                            if i>0 and label_list[i] == '/' and self.isnumeric(label_list[i-1]) == True and self.isnumeric(label_list[i+1]) == True:
+                                print(f'{label_list[i-1]} / {label_list[i+1]}')
+                                label_list[i-1] = label_list[i-1] / label_list[i+1]
+                                del label_list[i:i+2]
+                                print(label_list)
+                                break
+
+                        elif '*' in label_list: # если есть операция умножения
                             if i>0 and label_list[i] == '*' and self.isnumeric(label_list[i-1]) == True and self.isnumeric(label_list[i+1]) == True:
                                 print(f'{label_list[i-1]} * {label_list[i+1]}')
                                 label_list[i-1] = label_list[i-1] * label_list[i+1]
