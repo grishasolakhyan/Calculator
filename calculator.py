@@ -239,10 +239,32 @@ class Ui_MainWindow(object):
                             label_list[i] = float(label_list[i]) # перевод в тип float
                         else:
                             label_list[i] = int(label_list[i]) # перевод в тип int
-
                 print(label_list)
 
+                while True:
+                    len_label_list = len(label_list)
+                    if len_label_list == 1:
+                        final_result = label_list[0]
+                        break
+
+                    for i in range(len_label_list-1):
+                        if self.isnumeric(label_list[i]) == True and self.isnumeric(label_list[i+1]) == True:
+                            label_list[i]+=label_list[i+1]
+                            label_list.pop(i+1)
+                            print(label_list)
+                            break
+                        else:
+                            print(label_list)
+                            continue
+                print(f'Result = {final_result}')
         return 0
+
+    def isnumeric(self, obj):
+        try:
+            obj + 0
+            return True
+        except:
+            return False
 
     def clean_results(self):
         self.label_result.setText("")
