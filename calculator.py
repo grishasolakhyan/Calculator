@@ -223,7 +223,6 @@ class Ui_MainWindow(object):
                     continue
             if flag2 == False:
                 break
-        print(l_list)
 
         len_l_list = len(l_list)
         for i in range(len_l_list):  # перебор в списке по индексу
@@ -237,13 +236,32 @@ class Ui_MainWindow(object):
 
         return l_list
 
-    def calculation(self, n_list):
+    def calculation(self, num_list):
         while True:
-            len_n_list = len(n_list)
-            if len_n_list == 1:
-                final_result = n_list[0]
-                break
+            opened_bracket_i = 0
+            closed_bracket_i = 0
+            if '(' in num_list or ')' in num_list: # поиск скобок и выражения внутри них
+                for item in num_list:
+                    if item == '(':
+                        opened_bracket_i = num_list.index(item)
+                for item in reversed(num_list):
+                    if item == ')':
+                        closed_bracket_i = num_list.index(item)
+                n_list = num_list[opened_bracket_i + 1: closed_bracket_i]
 
+                print(f'Opened bracket id = {opened_bracket_i}\nClosed bracket id = {closed_bracket_i}')
+                print(f'There is bracket -> {num_list}')
+                print(f'Content -> {n_list}')
+                # final_result = 0
+                # break
+            else:
+                n_list = num_list
+
+
+            len_n_list = len(n_list)
+            if len(num_list) == 1:
+                final_result = num_list[0]
+                break
             for i in range(len_n_list - 1):
                 if '/' in n_list:  # если есть операция деления
                     if i > 0 and n_list[i] == '/' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
@@ -281,6 +299,9 @@ class Ui_MainWindow(object):
                 else:
                     print(n_list)
                     continue
+            num_list[opened_bracket_i] = n_list[0]
+            del num_list[opened_bracket_i+1:closed_bracket_i+1]
+
         return final_result
 
     def results(self):
@@ -301,7 +322,6 @@ class Ui_MainWindow(object):
                 num_list = self.collection_of_values(label_list)
                 result = self.calculation(num_list)
                 print(f'Result = {result}')
-        print(pow(2, -2))
         return 0
 
     def isnumeric(self, obj): # функция проверки на тип(числовой) объекта
