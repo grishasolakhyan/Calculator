@@ -105,7 +105,7 @@ class Ui_MainWindow(object):
         self.button_multy.setText(_translate("MainWindow", "*"))
         self.button_divid.setText(_translate("MainWindow", "/"))
         self.button_dot.setText(_translate("MainWindow", "."))
-        self.button_degree.setText(_translate("MainWindow", "**"))
+        self.button_degree.setText(_translate("MainWindow", "^"))
         self.button_bracket1.setText(_translate("MainWindow", "("))
         self.button_bracket2.setText(_translate("MainWindow", ")"))
 
@@ -178,101 +178,130 @@ class Ui_MainWindow(object):
         else:
             self.label_result.setText(self.label_result.text()+number)
 
+    def collection_of_values(self, l_list):
+        len_l_list = len(l_list)
+        while True:
+            flag1 = True
+            len_l_list = len(l_list)
+            for i in range(len_l_list - 1):  # перебор списка строки выражения по индексу
+                print(f'Iteration #{i + 1}')  # номер итерации
+
+                if (l_list[i].isdigit() == True and l_list[i + 1].isdigit() == True) or \
+                        ('.' in l_list[i] and l_list[i + 1].isdigit() == True) or \
+                        (l_list[i].isdigit() == True and '.' in l_list[
+                            i + 1]):  # если два элемента списка подряд идут числа, точка и число или число и точка
+                    print(
+                        f'{l_list[i]}[{i}] -> {l_list[i + 1]}[{i + 1}]')  # вывод текущего и следующего элементов
+                    l_list[i] += l_list[
+                        i + 1]  # добавление соседнего символа из следующего в текущий элемент списка
+                    l_list.pop(i + 1)  # удаление следующего элемента
+                    print(l_list)
+                    flag1 = True  # флаг
+                    break
+
+                else:
+                    print(
+                        f'{l_list[i]}[{i}] -> {l_list[i + 1]}[{i + 1}]')  # вывод текущего и следующего элементов
+                    print(l_list)
+                    flag1 = False  # флаг
+                    continue
+            if flag1 == False:
+                break
+
+        while True:
+            flag2 = True
+            len_l_list = len(l_list)
+            for i in range(len_l_list - 1):
+                if (l_list[i] == '+' or l_list[i] == '-') and any(
+                        chr.isdigit() for chr in l_list[i + 1]) == True:
+                    l_list[i] += l_list[i + 1]  # добавление плюса или минуса
+                    l_list.pop(i + 1)  # удаление следующего элемента
+                    flag2 = True
+                    break
+                else:
+                    flag2 = False
+                    continue
+            if flag2 == False:
+                break
+        print(l_list)
+
+        len_l_list = len(l_list)
+        for i in range(len_l_list):  # перебор в списке по индексу
+            res = any(chr.isdigit() for chr in l_list[i])  # проверка наличия цифр в элементе
+            if res == True:
+                if '.' in l_list[i]:  # если есть точка в числовом элементе
+                    l_list[i] = float(l_list[i])  # перевод в тип float
+                else:
+                    l_list[i] = int(l_list[i])  # перевод в тип int
+        print(l_list)
+
+        return l_list
+
+    def calculation(self, n_list):
+        while True:
+            len_n_list = len(n_list)
+            if len_n_list == 1:
+                final_result = n_list[0]
+                break
+
+            for i in range(len_n_list - 1):
+                if '/' in n_list:  # если есть операция деления
+                    if i > 0 and n_list[i] == '/' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
+                            n_list[i + 1]) == True:
+                        print(f'{n_list[i - 1]} / {n_list[i + 1]}')
+                        n_list[i - 1] = n_list[i - 1] / n_list[i + 1]
+                        del n_list[i:i + 2]
+                        print(n_list)
+                        break
+
+                elif '^' in n_list: # если есть операция степени
+                    if i > 0 and n_list[i] == '^' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
+                            n_list[i + 1]) == True:
+                        print(f'{n_list[i - 1]} ^ {n_list[i + 1]}')
+                        n_list[i - 1] = pow(n_list[i - 1], n_list[i + 1])
+                        del n_list[i:i + 2]
+                        print(n_list)
+                        break
+
+                elif '*' in n_list:  # если есть операция умножения
+                    if i > 0 and n_list[i] == '*' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
+                            n_list[i + 1]) == True:
+                        print(f'{n_list[i - 1]} * {n_list[i + 1]}')
+                        n_list[i - 1] = n_list[i - 1] * n_list[i + 1]
+                        del n_list[i:i + 2]
+                        print(n_list)
+                        break
+
+                elif self.isnumeric(n_list[i]) == True and self.isnumeric(
+                        n_list[i + 1]) == True:  # если два элемента подряд просто числа
+                    n_list[i] += n_list[i + 1]
+                    n_list.pop(i + 1)
+                    print(n_list)
+                    break
+                else:
+                    print(n_list)
+                    continue
+        return final_result
 
     def results(self):
         label_str = self.label_result.text() # получение строки выражения из label
 
         if len(label_str) == 0: # если строка пустая
             print(f'ERROR!') # вывод ошибки в консоль
+
         else: # если строка не пустая
             print(f'{label_str} - {type(label_str)}') # вывод строки выражения из label
             label_list = list(label_str) # перевод строки в список символов
             print(label_list)
+
             if label_list[0] == '*' or label_list[0] == '/':  # проверка на формат ввода операций умножения и деления в начале выражения
                 print(f'ERROR!')  # вывод ошибки в консоль
+
             else:
-                len_label_list = len(label_list)
-                while True:
-                    flag1 = True
-                    len_label_list = len(label_list)
-                    for i in range(len_label_list-1): # перебор списка строки выражения по индексу
-                        print(f'Iteration #{i+1}') # номер итерации
-                        if (label_list[i].isdigit() == True and label_list[i+1].isdigit() == True) or \
-                                ('.' in label_list[i] and label_list[i+1].isdigit() == True) or \
-                                (label_list[i].isdigit() == True and '.' in label_list[i+1]): # если два элемента списка подряд идут числа, точка и число или число и точка
-                            print(f'{label_list[i]}[{i}] -> {label_list[i + 1]}[{i + 1}]') # вывод текущего и следующего элементов
-                            label_list[i]+=label_list[i+1] # добавление соседнего символа из следующего в текущий элемент списка
-                            label_list.pop(i+1) # удаление следующего элемента
-                            print(label_list)
-                            flag1 = True # флаг
-                            break
-                        else:
-                            print(f'{label_list[i]}[{i}] -> {label_list[i+1]}[{i+1}]') # вывод текущего и следующего элементов
-                            print(label_list)
-                            flag1 = False # флаг
-                            continue
-                    if flag1 == False:
-                        break
-
-                while True:
-                    flag2 = True
-                    len_label_list = len(label_list)
-                    for i in range(len_label_list-1):
-                        res = any(chr.isdigit() for chr in label_list[i+1])  # проверка наличия цифр в элементе
-                        if(label_list[i] == '+' or label_list[i] == '-') and any(chr.isdigit() for chr in label_list[i+1]) == True:
-                            label_list[i] += label_list[i+1]  # добавление + или минуса
-                            label_list.pop(i+1)  # удаление следующего элемента
-                            flag2 = True
-                            break
-                        else:
-                            flag2 = False
-                            continue
-                    if flag2 == False:
-                        break
-                print(label_list)
-
-                len_label_list = len(label_list)
-                for i in range(len_label_list): # перебор в списке по индексу
-                    res = any(chr.isdigit() for chr in label_list[i]) # проверка наличия цифр в элементе
-                    if res == True:
-                        if '.' in label_list[i]: # если есть точка в числовом элементе
-                            label_list[i] = float(label_list[i]) # перевод в тип float
-                        else:
-                            label_list[i] = int(label_list[i]) # перевод в тип int
-                print(label_list)
-
-                while True:
-                    len_label_list = len(label_list)
-                    if len_label_list == 1:
-                        final_result = label_list[0]
-                        break
-
-                    for i in range(len_label_list-1):
-                        if '/' in label_list: # если есть операция деления
-                            if i>0 and label_list[i] == '/' and self.isnumeric(label_list[i-1]) == True and self.isnumeric(label_list[i+1]) == True:
-                                print(f'{label_list[i-1]} / {label_list[i+1]}')
-                                label_list[i-1] = label_list[i-1] / label_list[i+1]
-                                del label_list[i:i+2]
-                                print(label_list)
-                                break
-
-                        elif '*' in label_list: # если есть операция умножения
-                            if i>0 and label_list[i] == '*' and self.isnumeric(label_list[i-1]) == True and self.isnumeric(label_list[i+1]) == True:
-                                print(f'{label_list[i-1]} * {label_list[i+1]}')
-                                label_list[i-1] = label_list[i-1] * label_list[i+1]
-                                del label_list[i:i+2]
-                                print(label_list)
-                                break
-
-                        elif self.isnumeric(label_list[i]) == True and self.isnumeric(label_list[i+1]) == True: # если два элемента подряд просто числа
-                            label_list[i]+=label_list[i+1]
-                            label_list.pop(i+1)
-                            print(label_list)
-                            break
-                        else:
-                            print(label_list)
-                            continue
-                print(f'Result = {final_result}')
+                num_list = self.collection_of_values(label_list)
+                result = self.calculation(num_list)
+                print(f'Result = {result}')
+        print(pow(2, -2))
         return 0
 
     def isnumeric(self, obj): # функция проверки на тип(числовой) объекта
@@ -282,7 +311,7 @@ class Ui_MainWindow(object):
         except:
             return False
 
-    def clean_results(self):
+    def clean_results(self): # функция отчистки строки
         self.label_result.setText("")
 
     def btn_font_style(self):
