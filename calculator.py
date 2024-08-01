@@ -2,6 +2,10 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 import math
 import re
 
+class EmptyLabelString(Exception): pass
+class IncorrectExpression(Exception): pass
+class ZeroDivisionError(Exception): pass
+
 class Buttons:
     def __init__(self):
         pass
@@ -180,6 +184,9 @@ class Ui_MainWindow(object):
 
     def collection_of_values(self, l_list):
         len_l_list = len(l_list)
+        if len(l_list) == 0: # если строка пустая
+            raise EmptyLabelString()
+
         while True:
             flag1 = True
             len_l_list = len(l_list)
@@ -221,6 +228,8 @@ class Ui_MainWindow(object):
         return l_list
 
     def calculation(self, num_list):
+        if num_list[0] == '*' or num_list[0] == '/' or num_list[0] == '^':
+            raise IncorrectExpression()
         while True:
             opened_bracket_i = 0
             closed_bracket_i = 0
@@ -249,6 +258,10 @@ class Ui_MainWindow(object):
                     if i > 0 and n_list[i] == '/' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
                             n_list[i + 1]) == True:
                         print(f'{n_list[i - 1]} / {n_list[i + 1]}')
+
+                        if n_list[i+1] == 0:
+                            raise ZeroDivisionError()
+
                         n_list[i - 1] = n_list[i - 1] / n_list[i + 1]
                         del n_list[i:i + 2]
                         print(n_list)
@@ -306,23 +319,20 @@ class Ui_MainWindow(object):
         return final_result
 
     def results(self):
-        label_str = self.label_result.text() # получение строки выражения из label
-
-        if len(label_str) == 0: # если строка пустая
-            print(f'ERROR!') # вывод ошибки в консоль
-
-        else: # если строка не пустая
-            print(f'{label_str} - {type(label_str)}') # вывод строки выражения из label
-            label_list = list(label_str) # перевод строки в список символов
+        try:
+            label_str = self.label_result.text()  # получение строки выражения из label
+            print(f'{label_str} - {type(label_str)}')  # вывод строки выражения из label
+            label_list = list(label_str)  # перевод строки в список символов
             print(label_list)
-
-            if label_list[0] == '*' or label_list[0] == '/' or label_list[0] == '^':  # проверка на формат ввода операций умножения и деления в начале выражения
-                print(f'ERROR!')  # вывод ошибки в консоль
-
-            else:
-                num_list = self.collection_of_values(label_list)
-                result = self.calculation(num_list)
-                print(f'Result = {result}')
+            num_list = self.collection_of_values(label_list)
+            result = self.calculation(num_list)
+            print(f'Result = {result}')
+        except EmptyLabelString:
+            print(f'ERROR: EmptyLabelString')
+        except IncorrectExpression:
+            print(f'ERROR: IncorrectExpression')
+        except ZeroDivisionError:
+            print(f'ERROR: ZeroDivisionError')
         return 0
 
     def isnumeric(self, obj): # функция проверки на тип(числовой) объекта
