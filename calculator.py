@@ -208,22 +208,6 @@ class Ui_MainWindow(object):
             if flag1 == False:
                 break
 
-        while True:
-            flag2 = True
-            len_l_list = len(l_list)
-            for i in range(len_l_list - 1):
-                if (l_list[i] == '+' or l_list[i] == '-') and any(
-                        chr.isdigit() for chr in l_list[i + 1]) == True:
-                    l_list[i] += l_list[i + 1]  # добавление плюса или минуса
-                    l_list.pop(i + 1)  # удаление следующего элемента
-                    flag2 = True
-                    break
-                else:
-                    flag2 = False
-                    continue
-            if flag2 == False:
-                break
-
         len_l_list = len(l_list)
         for i in range(len_l_list):  # перебор в списке по индексу
             res = any(chr.isdigit() for chr in l_list[i])  # проверка наличия цифр в элементе
@@ -252,8 +236,6 @@ class Ui_MainWindow(object):
                 print(f'Opened bracket id = {opened_bracket_i}\nClosed bracket id = {closed_bracket_i}')
                 print(f'There is bracket -> {num_list}')
                 print(f'Content -> {n_list}')
-                # final_result = 0
-                # break
             else:
                 n_list = num_list
 
@@ -290,12 +272,31 @@ class Ui_MainWindow(object):
                         print(n_list)
                         break
 
-                elif self.isnumeric(n_list[i]) == True and self.isnumeric(
-                        n_list[i + 1]) == True:  # если два элемента подряд просто числа
-                    n_list[i] += n_list[i + 1]
-                    n_list.pop(i + 1)
-                    print(n_list)
-                    break
+                elif '+' in n_list or '-' in n_list:
+                    if n_list[0] == '+':
+                        n_list[1] = 0 + n_list[1]
+                        n_list.pop(0)
+                        break
+                    elif n_list[0] == '-':
+                        n_list[1] = 0 - n_list[1]
+                        n_list.pop(0)
+                        break
+                    else:
+                        if i > 0 and n_list[i] == '+' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
+                                n_list[i + 1]) == True:
+                            print(f'{n_list[i - 1]} + {n_list[i + 1]}')
+                            n_list[i - 1] = n_list[i - 1] + n_list[i + 1]
+                            del n_list[i:i + 2]
+                            print(n_list)
+                            break
+
+                        elif i > 0 and n_list[i] == '-' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
+                                n_list[i + 1]) == True:
+                            print(f'{n_list[i - 1]} - {n_list[i + 1]}')
+                            n_list[i - 1] = n_list[i - 1] - n_list[i + 1]
+                            del n_list[i:i + 2]
+                            print(n_list)
+                            break
                 else:
                     print(n_list)
                     continue
@@ -315,7 +316,7 @@ class Ui_MainWindow(object):
             label_list = list(label_str) # перевод строки в список символов
             print(label_list)
 
-            if label_list[0] == '*' or label_list[0] == '/':  # проверка на формат ввода операций умножения и деления в начале выражения
+            if label_list[0] == '*' or label_list[0] == '/' or label_list[0] == '^':  # проверка на формат ввода операций умножения и деления в начале выражения
                 print(f'ERROR!')  # вывод ошибки в консоль
 
             else:
