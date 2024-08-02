@@ -142,9 +142,9 @@ class Ui_MainWindow(object):
         self.button_minus.clicked.connect(lambda: self.write_math_symbol(self.button_minus.text()))
         self.button_multy.clicked.connect(lambda: self.write_math_symbol(self.button_multy.text()))
         self.button_divid.clicked.connect(lambda: self.write_math_symbol(self.button_divid.text()))
+        self.button_degree.clicked.connect(lambda: self.write_math_symbol(self.button_degree.text()))
 
         self.button_dot.clicked.connect(lambda: self.write_number(self.button_dot.text()))
-        self.button_degree.clicked.connect(lambda: self.write_number(self.button_degree.text()))
         self.button_bracket1.clicked.connect(lambda: self.write_number(self.button_bracket1.text()))
         self.button_bracket2.clicked.connect(lambda: self.write_number(self.button_bracket2.text()))
 
@@ -163,7 +163,7 @@ class Ui_MainWindow(object):
 
     def write_math_symbol(self, symbol):
         lbl_str = self.label_result.text()
-        symbol_pattern = ['+', '-', '/', '*']
+        symbol_pattern = ['+', '-', '/', '*', '^']
         if lbl_str == '':
             self.label_result.setText(self.label_result.text() + symbol)
         elif lbl_str != '':
@@ -228,7 +228,7 @@ class Ui_MainWindow(object):
         return l_list
 
     def calculation(self, num_list):
-        if num_list[0] == '*' or num_list[0] == '/' or num_list[0] == '^':
+        if num_list[0] == '*' or num_list[-1] == '*' or num_list[0] == '/' or num_list[-1] == '/' or num_list[0] == '^' or num_list[-1] == '^':
             raise IncorrectExpression()
         while True:
             opened_bracket_i = 0
