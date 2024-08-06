@@ -247,25 +247,10 @@ class Ui_MainWindow(object):
             else:
                 n_list = num_list
 
-
             len_n_list = len(n_list)
             if len(num_list) == 1:
                 final_result = num_list[0]
                 break
-
-            if 'π' or 'e' in n_list:
-                for i in range(len_n_list):
-                    if i == 0 and (n_list[i] == 'π' or n_list[i] == 'e') and (self.isnumeric(n_list[i+1]) == True or n_list[i+1] == 'π' or n_list[i+1] == 'e'):
-                            raise IncorrectExpression()
-                    elif (i > 0 and i < len_n_list-1) and (n_list[i] == 'π' or n_list[i] == 'e') and (self.isnumeric(n_list[i - 1]) == True or n_list[i - 1] == 'π' or n_list[i - 1] == 'e') or (self.isnumeric(n_list[i + 1]) == True or n_list[i + 1] == 'π' or n_list[i + 1] == 'e'):
-                            raise IncorrectExpression()
-                    elif i == len_n_list-1 and (n_list[i] == 'π' or n_list[i] == 'e') and (self.isnumeric(n_list[i-1]) == True or n_list[i-1] == 'π' or n_list[i-1] == 'e'):
-                            raise IncorrectExpression()
-                    else:
-                        if n_list[i] == 'π':
-                            n_list[i] = math.pi
-                        elif n_list[i] == 'e':
-                            n_list[i] = math.e
 
             for i in range(len_n_list - 1):
                 if '/' in n_list:  # если есть операция деления
@@ -366,12 +351,6 @@ class Ui_MainWindow(object):
     def btn_font_size(self):
         b_fnt_sze=12
         return b_fnt_sze
-
-    # def num_pi(self):
-    #     self.label_result.setText(str(math.pi))
-    #
-    # def num_e(self):
-    #     self.label_result.setText(str(math.e))
 
     def btn_sinus(self):
         pp=self.label_result.text()
