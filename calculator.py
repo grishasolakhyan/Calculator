@@ -229,10 +229,39 @@ class Ui_MainWindow(object):
     def calculation(self, num_list):
         if num_list[0] == '*' or num_list[-1] == '*' or num_list[0] == '/' or num_list[-1] == '/' or num_list[0] == '^' or num_list[-1] == '^':
             raise IncorrectExpression()
+
+        if 'π' in num_list or 'e' in num_list:
+            len_num_list = len(num_list)
+            for i in range(len_num_list):
+                if num_list[i] == 'π':
+                    num_list[i] = math.pi
+                if num_list[i] == 'e':
+                    num_list[i] = math.e
+            print(f'{num_list}')
+        else:
+            print(f'There is no pi or e')
+
         while True:
+            opened_bracket_count = 0
+            closed_bracket_count = 0
+
             opened_bracket_i = 0
             closed_bracket_i = 0
+
             if '(' in num_list or ')' in num_list: # поиск скобок и выражения внутри них
+                len_num_list = len(num_list)
+                for i in range(len_num_list): # проверка на кол-во открытых и закрытых скобок
+                    if num_list[i] == '(':
+                        opened_bracket_count += 1
+                    if num_list[i] == ')':
+                        closed_bracket_count += 1
+                if opened_bracket_count != closed_bracket_count:
+                    raise IncorrectExpression()
+                else:
+                    for i in range(len_num_list - 1):
+                        if (num_list[i] == '(' and num_list[i + 1] == ')') or (num_list[i] == ')' and num_list[i + 1] == '('):  # проверка на корректное указание скобок
+                            raise IncorrectExpression()
+
                 for item in num_list:
                     if item == '(':
                         opened_bracket_i = num_list.index(item)
@@ -246,6 +275,12 @@ class Ui_MainWindow(object):
                 print(f'Content -> {n_list}')
             else:
                 n_list = num_list
+
+            len_n_list = len(n_list)
+            for i in range(len_n_list - 1):
+                if self.isnumeric(n_list[i]) == True and self.isnumeric(n_list[i + 1]) == True:
+                    raise IncorrectExpression()
+
 
             len_n_list = len(n_list)
             if len(num_list) == 1:
