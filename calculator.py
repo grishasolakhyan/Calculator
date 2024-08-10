@@ -226,10 +226,7 @@ class Ui_MainWindow(object):
 
         return l_list
 
-    def calculation(self, num_list):
-        if num_list[0] == '*' or num_list[-1] == '*' or num_list[0] == '/' or num_list[-1] == '/' or num_list[0] == '^' or num_list[-1] == '^':
-            raise IncorrectExpression()
-
+    def num_pi_and_e_detection(self, num_list):
         if 'π' in num_list or 'e' in num_list:
             len_num_list = len(num_list)
             for i in range(len_num_list):
@@ -240,6 +237,18 @@ class Ui_MainWindow(object):
             print(f'{num_list}')
         else:
             print(f'There is no pi or e')
+        return num_list
+
+    def bracket_detection(self, num_list):
+
+        return 0
+
+
+    def calculation(self, num_list):
+        if num_list[0] == '*' or num_list[-1] == '*' or num_list[0] == '/' or num_list[-1] == '/' or num_list[0] == '^' or num_list[-1] == '^':
+            raise IncorrectExpression()
+        num_list = self.num_pi_and_e_detection(num_list)
+
 
         while True:
             opened_bracket_count = 0
@@ -262,12 +271,13 @@ class Ui_MainWindow(object):
                         if (num_list[i] == '(' and num_list[i + 1] == ')') or (num_list[i] == ')' and num_list[i + 1] == '('):  # проверка на корректное указание скобок
                             raise IncorrectExpression()
 
-                for item in num_list:
-                    if item == '(':
-                        opened_bracket_i = num_list.index(item)
-                for item in reversed(num_list):
-                    if item == ')':
-                        closed_bracket_i = num_list.index(item)
+
+                for i in range(len_num_list):
+                    if num_list[i] == '(':
+                        opened_bracket_i = i
+                for i in range(len_num_list-1, 0, -1):
+                    if num_list[i] == ')':
+                        closed_bracket_i = i
                 n_list = num_list[opened_bracket_i + 1: closed_bracket_i]
 
                 print(f'Opened bracket id = {opened_bracket_i}\nClosed bracket id = {closed_bracket_i}')
@@ -319,7 +329,7 @@ class Ui_MainWindow(object):
                         print(n_list)
                         break
 
-                elif '+' in n_list or '-' in n_list:
+                elif '+' in n_list or '-' in n_list: # если есть + или -
                     if n_list[0] == '+':
                         n_list[1] = 0 + n_list[1]
                         n_list.pop(0)
