@@ -127,30 +127,30 @@ class Ui_MainWindow(object):
         self.button_clean.setText(_translate("MainWindow", "C"))
 
     def add_functions(self):
-        self.button_1.clicked.connect(lambda: self.write_number(self.button_1.text()))
-        self.button_2.clicked.connect(lambda: self.write_number(self.button_2.text()))
-        self.button_3.clicked.connect(lambda: self.write_number(self.button_3.text()))
-        self.button_4.clicked.connect(lambda: self.write_number(self.button_4.text()))
-        self.button_5.clicked.connect(lambda: self.write_number(self.button_5.text()))
-        self.button_6.clicked.connect(lambda: self.write_number(self.button_6.text()))
-        self.button_7.clicked.connect(lambda: self.write_number(self.button_7.text()))
-        self.button_8.clicked.connect(lambda: self.write_number(self.button_8.text()))
-        self.button_9.clicked.connect(lambda: self.write_number(self.button_9.text()))
-        self.button_0.clicked.connect(lambda: self.write_number(self.button_0.text()))
-        self.button_pi.clicked.connect(lambda: self.write_number(self.button_pi.text()))
-        self.button_e.clicked.connect(lambda: self.write_number(self.button_e.text()))
+        self.button_1.clicked.connect(lambda: self.main_clicked_method(self.button_1.text()))
+        self.button_2.clicked.connect(lambda: self.main_clicked_method(self.button_2.text()))
+        self.button_3.clicked.connect(lambda: self.main_clicked_method(self.button_3.text()))
+        self.button_4.clicked.connect(lambda: self.main_clicked_method(self.button_4.text()))
+        self.button_5.clicked.connect(lambda: self.main_clicked_method(self.button_5.text()))
+        self.button_6.clicked.connect(lambda: self.main_clicked_method(self.button_6.text()))
+        self.button_7.clicked.connect(lambda: self.main_clicked_method(self.button_7.text()))
+        self.button_8.clicked.connect(lambda: self.main_clicked_method(self.button_8.text()))
+        self.button_9.clicked.connect(lambda: self.main_clicked_method(self.button_9.text()))
+        self.button_0.clicked.connect(lambda: self.main_clicked_method(self.button_0.text()))
+        self.button_pi.clicked.connect(lambda: self.main_clicked_method(self.button_pi.text()))
+        self.button_e.clicked.connect(lambda: self.main_clicked_method(self.button_e.text()))
 
-        self.button_dot.clicked.connect(lambda: self.write_number(self.button_dot.text()))
-        self.button_bracket1.clicked.connect(lambda: self.write_number(self.button_bracket1.text()))
-        self.button_bracket2.clicked.connect(lambda: self.write_number(self.button_bracket2.text()))
+        self.button_bracket1.clicked.connect(lambda: self.main_clicked_method(self.button_bracket1.text()))
+        self.button_bracket2.clicked.connect(lambda: self.main_clicked_method(self.button_bracket2.text()))
 
-        self.button_plus.clicked.connect(lambda: self.write_math_symbol(self.button_plus.text()))
-        self.button_minus.clicked.connect(lambda: self.write_math_symbol(self.button_minus.text()))
-        self.button_multy.clicked.connect(lambda: self.write_math_symbol(self.button_multy.text()))
-        self.button_divid.clicked.connect(lambda: self.write_math_symbol(self.button_divid.text()))
-        self.button_degree.clicked.connect(lambda: self.write_math_symbol(self.button_degree.text()))
+        self.button_plus.clicked.connect(lambda: self.main_clicked_method(self.button_plus.text()))
+        self.button_minus.clicked.connect(lambda: self.main_clicked_method(self.button_minus.text()))
+        self.button_multy.clicked.connect(lambda: self.main_clicked_method(self.button_multy.text()))
+        self.button_divid.clicked.connect(lambda: self.main_clicked_method(self.button_divid.text()))
+        self.button_degree.clicked.connect(lambda: self.main_clicked_method(self.button_degree.text()))
+        self.button_dot.clicked.connect(lambda: self.main_clicked_method(self.button_dot.text()))
 
-        # self.button_sin.clicked.connect(self.btn_sinus)
+        # self.button_sin.clicked.connect(lambda: self.write_number(self.button_sin.text()))
         # self.button_cos.clicked.connect(self.btn_cosinus)
         # self.button_tg.clicked.connect(self.btn_tangens)
         # self.button_asin.clicked.connect(self.btn_asinus)
@@ -160,26 +160,24 @@ class Ui_MainWindow(object):
         self.button_equal.clicked.connect(self.results)
         self.button_clean.clicked.connect(self.clean_results)
 
-    def write_math_symbol(self, symbol):
+    def main_clicked_method(self, value):
+        self.write_label_string(value)
+        return 0
+
+    def write_label_string(self, val):
         lbl_str = self.label_result.text()
-        symbol_pattern = ['+', '-', '/', '*', '^']
+        symbol_pattern = ['+', '-', '/', '*', '^', '.']
         if lbl_str == '':
-            self.label_result.setText(self.label_result.text() + symbol)
+            self.label_result.setText(self.label_result.text() + val)
         elif lbl_str != '':
             lbl_str_list = list(lbl_str)
-            if lbl_str_list[-1] in symbol_pattern:
-                lbl_str_list[-1] = symbol
+            if lbl_str_list[-1] in symbol_pattern and val in symbol_pattern:
+                lbl_str_list[-1] = val
                 lbl_str = ''.join(lbl_str_list)
                 self.label_result.setText(lbl_str)
             else:
-                self.label_result.setText(self.label_result.text() + symbol)
+                self.label_result.setText(self.label_result.text() + val)
         return 0
-
-    def write_number(self, number):
-        if self.label_result.text()=="0":
-            self.label_result.setText(number)
-        else:
-            self.label_result.setText(self.label_result.text()+number)
 
     def collection_of_values(self, l_list):
         len_l_list = len(l_list)
@@ -396,48 +394,6 @@ class Ui_MainWindow(object):
     def btn_font_size(self):
         b_fnt_sze=12
         return b_fnt_sze
-
-    def btn_sinus(self):
-        pp=self.label_result.text()
-        if self.label_result.text()=="0":
-            self.label_result.setText("math.sin(")
-        elif pp[-1]=="+" or pp[-1]=="-" or pp[-1]=="*" or pp[-1]=="/":
-            self.label_result.setText(self.label_result.text()+"math.sin(")
-
-    def btn_cosinus(self):
-        pp=self.label_result.text()
-        if self.label_result.text()=="0":
-            self.label_result.setText("math.cos(")
-        elif pp[-1]=="+" or pp[-1]=="-" or pp[-1]=="*" or pp[-1]=="/":
-            self.label_result.setText(self.label_result.text()+"math.cos(")
-
-    def btn_tangens(self):
-        pp=self.label_result.text()
-        if self.label_result.text()=="0":
-            self.label_result.setText("math.tg(")
-        elif pp[-1]=="+" or pp[-1]=="-" or pp[-1]=="*" or pp[-1]=="/":
-            self.label_result.setText(self.label_result.text()+"math.tg(")
-
-    def btn_asinus(self):
-        pp=self.label_result.text()
-        if self.label_result.text()=="0":
-            self.label_result.setText("math.asin(")
-        elif pp[-1]=="+" or pp[-1]=="-" or pp[-1]=="*" or pp[-1]=="/":
-            self.label_result.setText(self.label_result.text()+"math.asin(")
-
-    def btn_acosinus(self):
-        pp=self.label_result.text()
-        if self.label_result.text()=="0":
-            self.label_result.setText("math.acos(")
-        elif pp[-1]=="+" or pp[-1]=="-" or pp[-1]=="*" or pp[-1]=="/":
-            self.label_result.setText(self.label_result.text()+"math.acos(")
-
-    def btn_atangens(self):
-        pp=self.label_result.text()
-        if self.label_result.text()=="0":
-            self.label_result.setText("math.atg(")
-        elif pp[-1]=="+" or pp[-1]=="-" or pp[-1]=="*" or pp[-1]=="/":
-            self.label_result.setText(self.label_result.text()+"math.atg(")
 
 if __name__ == "__main__":
     import sys
