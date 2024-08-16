@@ -184,6 +184,7 @@ class Ui_MainWindow(object):
         return 0
 
     def collection_of_values(self, l_list):
+        print(f'{l_list} - original list')  # вывод первоначального списка из строки
         len_l_list = len(l_list)
         if len(l_list) == 0: # если строка пустая
             raise EmptyLabelString()
@@ -191,25 +192,22 @@ class Ui_MainWindow(object):
         while True:
             flag1 = True
             len_l_list = len(l_list)
-            for i in range(len_l_list - 1):  # перебор списка строки выражения по индексу
-                print(f'Iteration #{i + 1}')  # номер итерации
+            for i in range(len_l_list - 1): # перебор списка строки выражения по индексу
+                # print(f'Iteration #{i + 1}') # номер итерации
 
                 if (l_list[i].isdigit() == True and l_list[i + 1].isdigit() == True) or \
                         ('.' in l_list[i] and l_list[i + 1].isdigit() == True) or \
                         (l_list[i].isdigit() == True and '.' in l_list[
                             i + 1]):  # если два элемента списка подряд идут числа, точка и число или число и точка
-                    print(
-                        f'{l_list[i]}[{i}] -> {l_list[i + 1]}[{i + 1}]')  # вывод текущего и следующего элементов
-                    l_list[i] += l_list[
-                        i + 1]  # добавление соседнего символа из следующего в текущий элемент списка
-                    l_list.pop(i + 1)  # удаление следующего элемента
-                    print(l_list)
+                    # print(f'{l_list[i]}[{i}] -> {l_list[i + 1]}[{i + 1}]') # вывод текущего и следующего элементов
+                    l_list[i] += l_list[i + 1] # добавление соседнего символа из следующего в текущий элемент списка
+                    l_list.pop(i + 1) # удаление следующего элемента
+                    # print(l_list)
                     flag1 = True  # флаг
                     break
                 else:
-                    print(
-                        f'{l_list[i]}[{i}] -> {l_list[i + 1]}[{i + 1}]')  # вывод текущего и следующего элементов
-                    print(l_list)
+                    # print(f'{l_list[i]}[{i}] -> {l_list[i + 1]}[{i + 1}]') # вывод текущего и следующего элементов
+                    # print(l_list)
                     flag1 = False  # флаг
                     continue
             len_l_list = len(l_list)
@@ -228,7 +226,7 @@ class Ui_MainWindow(object):
                     l_list[i] = float(l_list[i])  # перевод в тип float
                 else:
                     l_list[i] = int(l_list[i])  # перевод в тип int
-        print(l_list)
+        print(f'{l_list} - new list') # вывод готового текстового списка
 
         return l_list
 
@@ -241,8 +239,8 @@ class Ui_MainWindow(object):
                 if num_list[i] == 'e':
                     num_list[i] = math.e
             print(f'{num_list}')
-        else:
-            print(f'There is no pi or e')
+        # else:
+        #     print(f'There is no pi or e')
         return num_list
 
     def calculation(self, num_list):
@@ -281,9 +279,9 @@ class Ui_MainWindow(object):
                         closed_bracket_i = i
                 n_list = num_list[opened_bracket_i + 1: closed_bracket_i]
 
-                print(f'Opened bracket id = {opened_bracket_i}\nClosed bracket id = {closed_bracket_i}')
-                print(f'There is bracket -> {num_list}')
-                print(f'Content -> {n_list}')
+                # print(f'Opened bracket id = {opened_bracket_i}\nClosed bracket id = {closed_bracket_i}')
+                # print(f'There is bracket -> {num_list}')
+                # print(f'Content -> {n_list}')
             else:
                 n_list = num_list
 
@@ -366,9 +364,8 @@ class Ui_MainWindow(object):
     def results(self):
         try:
             label_str = self.label_result.text()  # получение строки выражения из label
-            print(f'{label_str} - {type(label_str)}')  # вывод строки выражения из label
+            # print(f'{label_str} - {type(label_str)}')  # вывод строки выражения из label
             label_list = list(label_str)  # перевод строки в список символов
-            print(label_list)
             num_list = self.collection_of_values(label_list)
             result = self.calculation(num_list)
             print(f'Result = {result}')
