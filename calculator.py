@@ -162,6 +162,10 @@ class Ui_MainWindow(object):
 
     def main_clicked_method(self, value):
         self.write_label_string(value)
+        # self.creation_list(value)
+        return 0
+
+    def creation_list(self, val):
         return 0
 
     def write_label_string(self, val):
@@ -202,13 +206,17 @@ class Ui_MainWindow(object):
                     print(l_list)
                     flag1 = True  # флаг
                     break
-
                 else:
                     print(
                         f'{l_list[i]}[{i}] -> {l_list[i + 1]}[{i + 1}]')  # вывод текущего и следующего элементов
                     print(l_list)
                     flag1 = False  # флаг
                     continue
+            len_l_list = len(l_list)
+            
+            if len_l_list == 1:
+                flag1 = False
+
             if flag1 == False:
                 break
 
@@ -236,11 +244,6 @@ class Ui_MainWindow(object):
         else:
             print(f'There is no pi or e')
         return num_list
-
-    def bracket_detection(self, num_list):
-
-        return 0
-
 
     def calculation(self, num_list):
         if num_list[0] == '*' or num_list[-1] == '*' or num_list[0] == '/' or num_list[-1] == '/' or num_list[0] == '^' or num_list[-1] == '^':
