@@ -161,11 +161,12 @@ class Ui_MainWindow(object):
         self.button_clean.clicked.connect(self.clean_results)
 
     def main_clicked_method(self, value):
-        self.write_label_string(value)
-        # self.creation_list(value)
+        self.write_label_string(value) # функция отвечающая за написание строки в label
+        self.creation_list(value) # функция для вычисления
         return 0
 
     def creation_list(self, val):
+        print(val)
         return 0
 
     def write_label_string(self, val):
@@ -179,6 +180,8 @@ class Ui_MainWindow(object):
                 lbl_str_list[-1] = val
                 lbl_str = ''.join(lbl_str_list)
                 self.label_result.setText(lbl_str)
+            elif lbl_str == 'Error':
+                self.label_result.setText(val)
             else:
                 self.label_result.setText(self.label_result.text() + val)
         return 0
@@ -369,12 +372,16 @@ class Ui_MainWindow(object):
             num_list = self.collection_of_values(label_list)
             result = self.calculation(num_list)
             print(f'Result = {result}')
+            self.label_result.setText(str(result))
         except EmptyLabelString:
             print(f'ERROR: EmptyLabelString')
+            self.label_result.setText('Error')
         except IncorrectExpression:
             print(f'ERROR: IncorrectExpression')
+            self.label_result.setText('Error')
         except ZeroDivisionError:
             print(f'ERROR: ZeroDivisionError')
+            self.label_result.setText('Error')
         return 0
 
     def isnumeric(self, obj): # функция проверки на тип(числовой) объекта
