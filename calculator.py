@@ -72,15 +72,10 @@ class Ui_MainWindow(object):
         self.button_divid = btn_object.number_button(123, 163, 40, 40, 'btn divid', cw)
         self.button_degree = btn_object.number_button(123, 204, 40, 40, 'btn degree', cw)
 
-        # self.button_sin = btn_object.number_button(164, 40, 40, 40, 'btn sin', cw)
-        # self.button_cos = btn_object.number_button(164, 81, 40, 40, 'btn cos', cw)
-        # self.button_tg = btn_object.number_button(164, 122, 40, 40, 'btn tg2', cw)
-        # self.button_asin = btn_object.number_button(205, 40, 40, 40, 'btn asin', cw)
-        # self.button_acos = btn_object.number_button(205, 81, 40, 40, 'btn acos', cw)
-        # self.button_atg = btn_object.number_button(205, 122, 40, 40, 'btn atg', cw)
-
         self.button_equal = btn_object.number_button(41, 163, 81, 40, 'btn equal', cw)
         self.button_clean = btn_object.number_button(41, 204, 81, 40, 'btn clean', cw)
+
+        self.button_sqrt = btn_object.number_button(164, 40, 40, 40, 'btn sqrt', cw)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.retranslateUi(MainWindow)
@@ -116,15 +111,10 @@ class Ui_MainWindow(object):
         self.button_divid.setText(_translate("MainWindow", "/"))
         self.button_degree.setText(_translate("MainWindow", "^"))
 
-        # self.button_sin.setText(_translate("MainWindow", "sin"))
-        # self.button_cos.setText(_translate("MainWindow", "cos"))
-        # self.button_tg.setText(_translate("MainWindow", "tg"))
-        # self.button_asin.setText(_translate("MainWindow", "asin"))
-        # self.button_acos.setText(_translate("MainWindow", "acos"))
-        # self.button_atg.setText(_translate("MainWindow", "atg"))
-
         self.button_equal.setText(_translate("MainWindow", "="))
         self.button_clean.setText(_translate("MainWindow", "C"))
+
+        self.button_sqrt.setText(_translate("MainWondow", "√"))
 
     def add_functions(self):
         self.button_1.clicked.connect(lambda: self.main_clicked_method(self.button_1.text()))
@@ -150,23 +140,13 @@ class Ui_MainWindow(object):
         self.button_degree.clicked.connect(lambda: self.main_clicked_method(self.button_degree.text()))
         self.button_dot.clicked.connect(lambda: self.main_clicked_method(self.button_dot.text()))
 
-        # self.button_sin.clicked.connect(lambda: self.write_number(self.button_sin.text()))
-        # self.button_cos.clicked.connect(self.btn_cosinus)
-        # self.button_tg.clicked.connect(self.btn_tangens)
-        # self.button_asin.clicked.connect(self.btn_asinus)
-        # self.button_acos.clicked.connect(self.btn_acosinus)
-        # self.button_atg.clicked.connect(self.btn_atangens)
+        self.button_sqrt.clicked.connect(lambda: self.main_clicked_method(self.button_sqrt.text()))
 
         self.button_equal.clicked.connect(self.results)
         self.button_clean.clicked.connect(self.clean_results)
 
     def main_clicked_method(self, value):
         self.write_label_string(value) # функция отвечающая за написание строки в label
-        self.creation_list(value) # функция для вычисления
-        return 0
-
-    def creation_list(self, val):
-        print(val)
         return 0
 
     def write_label_string(self, val):
@@ -175,10 +155,8 @@ class Ui_MainWindow(object):
         if lbl_str == '':
             self.label_result.setText(self.label_result.text() + val)
         elif lbl_str != '':
-            lbl_str_list = list(lbl_str)
-            if lbl_str_list[-1] in symbol_pattern and val in symbol_pattern:
-                lbl_str_list[-1] = val
-                lbl_str = ''.join(lbl_str_list)
+            if lbl_str[-1] in symbol_pattern and val in symbol_pattern:
+                lbl_str = lbl_str[:-1] + val
                 self.label_result.setText(lbl_str)
             elif lbl_str == 'Error':
                 self.label_result.setText(val)
@@ -196,25 +174,19 @@ class Ui_MainWindow(object):
             flag1 = True
             len_l_list = len(l_list)
             for i in range(len_l_list - 1): # перебор списка строки выражения по индексу
-                # print(f'Iteration #{i + 1}') # номер итерации
-
                 if (l_list[i].isdigit() == True and l_list[i + 1].isdigit() == True) or \
                         ('.' in l_list[i] and l_list[i + 1].isdigit() == True) or \
                         (l_list[i].isdigit() == True and '.' in l_list[
                             i + 1]):  # если два элемента списка подряд идут числа, точка и число или число и точка
-                    # print(f'{l_list[i]}[{i}] -> {l_list[i + 1]}[{i + 1}]') # вывод текущего и следующего элементов
                     l_list[i] += l_list[i + 1] # добавление соседнего символа из следующего в текущий элемент списка
                     l_list.pop(i + 1) # удаление следующего элемента
-                    # print(l_list)
-                    flag1 = True  # флаг
+                    flag1 = True
                     break
                 else:
-                    # print(f'{l_list[i]}[{i}] -> {l_list[i + 1]}[{i + 1}]') # вывод текущего и следующего элементов
-                    # print(l_list)
-                    flag1 = False  # флаг
+                    flag1 = False
                     continue
             len_l_list = len(l_list)
-            
+
             if len_l_list == 1:
                 flag1 = False
 
@@ -242,12 +214,16 @@ class Ui_MainWindow(object):
                 if num_list[i] == 'e':
                     num_list[i] = math.e
             print(f'{num_list}')
-        # else:
-        #     print(f'There is no pi or e')
         return num_list
 
     def calculation(self, num_list):
-        if num_list[0] == '*' or num_list[-1] == '*' or num_list[0] == '/' or num_list[-1] == '/' or num_list[0] == '^' or num_list[-1] == '^':
+        if num_list[0] == '*' or \
+            num_list[-1] == '*' or \
+            num_list[0] == '/' or \
+            num_list[-1] == '/' or \
+            num_list[0] == '^' or \
+            num_list[-1] == '^' or \
+            num_list[-1] == '√':
             raise IncorrectExpression()
         num_list = self.num_pi_and_e_detection(num_list)
 
@@ -281,10 +257,6 @@ class Ui_MainWindow(object):
                     if num_list[i] == ')':
                         closed_bracket_i = i
                 n_list = num_list[opened_bracket_i + 1: closed_bracket_i]
-
-                # print(f'Opened bracket id = {opened_bracket_i}\nClosed bracket id = {closed_bracket_i}')
-                # print(f'There is bracket -> {num_list}')
-                # print(f'Content -> {n_list}')
             else:
                 n_list = num_list
 
@@ -312,6 +284,15 @@ class Ui_MainWindow(object):
                         del n_list[i:i + 2]
                         print(n_list)
                         break
+
+                elif '√' in n_list:
+                    if n_list[i] == '√' and self.isnumeric(n_list[i + 1]) == True:
+                        n_list[i] = math.sqrt(n_list[i + 1])
+                        n_list.pop(i+1)
+                        break
+                    else:
+                        # raise  IncorrectExpression()
+                        continue
 
                 elif '^' in n_list: # если есть операция степени
                     if i > 0 and n_list[i] == '^' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
@@ -367,7 +348,6 @@ class Ui_MainWindow(object):
     def results(self):
         try:
             label_str = self.label_result.text()  # получение строки выражения из label
-            # print(f'{label_str} - {type(label_str)}')  # вывод строки выражения из label
             label_list = list(label_str)  # перевод строки в список символов
             num_list = self.collection_of_values(label_list)
             result = self.calculation(num_list)
