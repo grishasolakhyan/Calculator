@@ -28,15 +28,19 @@ class Buttons:
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
+        a_size = 40
+        b_size = a_size * 2
+        row_const = a_size + 1
+        col_const = b_size + 1
 
         MainWindow.setObjectName("MainWindow")
-        MainWindow.setFixedSize(246, 245)
+        MainWindow.setFixedSize(b_size * 5, a_size * 6)
         MainWindow.setStyleSheet("background-color: rgb(35, 42, 57);")
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
 
         self.label_result = QtWidgets.QLabel(self.centralwidget)
-        self.label_result.setGeometry(QtCore.QRect(0, 0, 400, 40))
+        self.label_result.setGeometry(QtCore.QRect(0, 0, b_size * 5, a_size))
         font = QtGui.QFont()
         font.setFamily(self.btn_font_style())
         font.setPointSize(15)
@@ -49,35 +53,35 @@ class Ui_MainWindow(object):
         cw = self.centralwidget
         btn_object = Buttons()
 
-        self.button_1 = btn_object.number_button(0, 122, 40, 40, 'btn 1', cw)
-        self.button_2 = btn_object.number_button(41, 122, 40, 40, 'btn 2', cw)
-        self.button_3 = btn_object.number_button(82, 122, 40, 40, 'btn 3', cw)
-        self.button_4 = btn_object.number_button(0, 81, 40, 40, 'btn 4', cw)
-        self.button_5 = btn_object.number_button(41, 81, 40, 40, 'btn 5', cw)
-        self.button_6 = btn_object.number_button(82, 81, 40, 40, 'btn 6', cw)
-        self.button_7 = btn_object.number_button(0, 40, 40, 40, 'btn 7', cw)
-        self.button_8 = btn_object.number_button(41, 40, 40, 40, 'btn 8', cw)
-        self.button_9 = btn_object.number_button(82, 40, 40, 40, 'btn 9', cw)
-        self.button_0 = btn_object.number_button(0, 163, 40, 40, 'btn 0', cw)
-        self.button_pi = btn_object.number_button(164, 163, 40, 40, 'btn pi', cw)
-        self.button_e = btn_object.number_button(205, 163, 40, 40, 'btn e', cw)
+        self.button_1 = btn_object.number_button((1-1) * col_const, 3 * row_const - 1, b_size, a_size, 'btn 1', cw)
+        self.button_2 = btn_object.number_button((2-1) * col_const, 3 * row_const - 1, b_size, a_size, 'btn 2', cw)
+        self.button_3 = btn_object.number_button((3-1) * col_const, 3 * row_const - 1, b_size, a_size, 'btn 3', cw)
+        self.button_4 = btn_object.number_button((1-1) * col_const, 2 * row_const - 1, b_size, a_size, 'btn 4', cw)
+        self.button_5 = btn_object.number_button((2-1) * col_const, 2 * row_const - 1, b_size, a_size, 'btn 5', cw)
+        self.button_6 = btn_object.number_button((3-1) * col_const, 2 * row_const - 1, b_size, a_size, 'btn 6', cw)
+        self.button_7 = btn_object.number_button((1-1) * col_const, 1 * row_const - 1, b_size, a_size, 'btn 7', cw)
+        self.button_8 = btn_object.number_button((2-1) * col_const, 1 * row_const - 1, b_size, a_size, 'btn 8', cw)
+        self.button_9 = btn_object.number_button((3-1) * col_const, 1 * row_const - 1, b_size, a_size, 'btn 9', cw)
+        self.button_0 = btn_object.number_button((2-1) * col_const, 4 * row_const - 1, b_size, a_size, 'btn 0', cw)
+        self.button_pi = btn_object.number_button((1-1) * col_const, 4 * row_const - 1, b_size, a_size, 'btn pi', cw)
+        self.button_e = btn_object.number_button((3-1) * col_const, 4 * row_const - 1, b_size, a_size, 'btn e', cw)
 
-        self.button_dot = btn_object.number_button(0, 204, 40, 40, 'btn dot', cw)
-        self.button_bracket1 = btn_object.number_button(164, 204, 40, 40, 'btn bracket 1', cw)
-        self.button_bracket2 = btn_object.number_button(205, 204, 40, 40, 'btn bracket 2', cw)
+        self.button_dot = btn_object.number_button((5-1) * col_const, 4 * row_const - 1, b_size, a_size, 'btn dot', cw)
+        self.button_bracket1 = btn_object.number_button((4-1) * col_const, 5 * row_const - 1, b_size, a_size, 'btn bracket 1', cw)
+        self.button_bracket2 = btn_object.number_button((5-1) * col_const, 5 * row_const - 1, b_size, a_size, 'btn bracket 2', cw)
 
-        self.button_plus = btn_object.number_button(123, 40, 40, 40, 'btn plus', cw)
-        self.button_minus = btn_object.number_button(123, 81, 40, 40, 'btn minus', cw)
-        self.button_multy = btn_object.number_button(123, 122, 40, 40, 'btn multy', cw)
-        self.button_divid = btn_object.number_button(123, 163, 40, 40, 'btn divid', cw)
-        self.button_degree = btn_object.number_button(123, 204, 40, 40, 'btn degree', cw)
+        self.button_plus = btn_object.number_button((4-1) * col_const, 1 * row_const - 1, b_size, a_size, 'btn plus', cw)
+        self.button_minus = btn_object.number_button((4-1) * col_const, 2 * row_const - 1, b_size, a_size, 'btn minus', cw)
+        self.button_multy = btn_object.number_button((4-1) * col_const, 3 * row_const - 1, b_size, a_size, 'btn multy', cw)
+        self.button_divid = btn_object.number_button((4-1) * col_const, 4 * row_const - 1, b_size, a_size, 'btn divid', cw)
+        self.button_degree = btn_object.number_button((5-1) * col_const, 1 * row_const - 1, b_size, a_size, 'btn degree', cw)
 
-        self.button_sqrt = btn_object.number_button(164, 40, 40, 40, 'btn sqrt', cw)
-        self.button_factorial = btn_object.number_button(205, 40, 40, 40, 'btn factorial', cw)
+        self.button_sqrt = btn_object.number_button((5-1) * col_const, 3 * row_const - 1, b_size, a_size, 'btn sqrt', cw)
+        self.button_factorial = btn_object.number_button((5-1) * col_const, 2 * row_const - 1, b_size, a_size, 'btn factorial', cw)
 
-        self.button_equal = btn_object.number_button(41, 163, 81, 40, 'btn equal', cw)
-        self.button_clean = btn_object.number_button(41, 204, 81, 40, 'btn clean', cw)
-        self.button_backspace = btn_object.number_button(164, 81, 81, 40, 'btn backspace', cw)
+        self.button_equal = btn_object.number_button((1-1) * col_const, 5 * row_const - 1, b_size, a_size, 'btn equal', cw)
+        self.button_clean = btn_object.number_button((3-1) * col_const, 5 * row_const - 1, b_size, a_size, 'btn clean', cw)
+        self.button_backspace = btn_object.number_button((2-1) * col_const, 5 * row_const - 1, b_size, a_size, 'btn backspace', cw)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.retranslateUi(MainWindow)
