@@ -72,11 +72,12 @@ class Ui_MainWindow(object):
         self.button_divid = btn_object.number_button(123, 163, 40, 40, 'btn divid', cw)
         self.button_degree = btn_object.number_button(123, 204, 40, 40, 'btn degree', cw)
 
-        self.button_equal = btn_object.number_button(41, 163, 81, 40, 'btn equal', cw)
-        self.button_clean = btn_object.number_button(41, 204, 81, 40, 'btn clean', cw)
-
         self.button_sqrt = btn_object.number_button(164, 40, 40, 40, 'btn sqrt', cw)
         self.button_factorial = btn_object.number_button(205, 40, 40, 40, 'btn factorial', cw)
+
+        self.button_equal = btn_object.number_button(41, 163, 81, 40, 'btn equal', cw)
+        self.button_clean = btn_object.number_button(41, 204, 81, 40, 'btn clean', cw)
+        self.button_backspace = btn_object.number_button(164, 81, 81, 40, 'btn backspace', cw)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.retranslateUi(MainWindow)
@@ -112,11 +113,12 @@ class Ui_MainWindow(object):
         self.button_divid.setText(_translate("MainWindow", "/"))
         self.button_degree.setText(_translate("MainWindow", "^"))
 
+        self.button_sqrt.setText(_translate("MainWindow", "√"))
+        self.button_factorial.setText(_translate("MainWindow", "!"))
+
         self.button_equal.setText(_translate("MainWindow", "="))
         self.button_clean.setText(_translate("MainWindow", "C"))
-
-        self.button_sqrt.setText(_translate("MainWondow", "√"))
-        self.button_factorial.setText(_translate("MainWondow", "!"))
+        self.button_backspace.setText(_translate("MainWindow", "←"))
 
     def add_functions(self):
         self.button_1.clicked.connect(lambda: self.main_clicked_method(self.button_1.text()))
@@ -147,9 +149,17 @@ class Ui_MainWindow(object):
 
         self.button_equal.clicked.connect(self.results)
         self.button_clean.clicked.connect(self.clean_results)
+        self.button_backspace.clicked.connect(self.backspace)
 
     def main_clicked_method(self, value):
         self.write_label_string(value) # функция отвечающая за написание строки в label
+        return 0
+
+    def backspace(self):
+        label_str = self.label_result.text()
+        if len(label_str) > 0:
+            label_str_2 = label_str[:-1]
+            self.label_result.setText(label_str_2)
         return 0
 
     def write_label_string(self, val):
