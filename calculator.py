@@ -292,13 +292,16 @@ class Ui_MainWindow(object):
                         break
 
                 elif '√' in n_list:
-                    if n_list[i] == '√' and self.isnumeric(n_list[i + 1]) == True:
-                        n_list[i] = math.sqrt(n_list[i + 1])
-                        n_list.pop(i+1)
-                        break
-                    else:
-                        # raise  IncorrectExpression()
-                        continue
+                    if n_list[i] == '√':
+                        if self.isnumeric(n_list[i + 1]) == True:
+                            if n_list[i + 1] < 0:
+                                raise IncorrectExpression()
+                            else:
+                                n_list[i] = math.sqrt(n_list[i + 1])
+                                n_list.pop(i+1)
+                                break
+                        else:
+                            raise IncorrectExpression()
 
                 elif '!' in n_list:
                     if self.isnumeric(n_list[i]) == True and n_list[i + 1] == '!':
