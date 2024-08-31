@@ -164,7 +164,10 @@ class Ui_MainWindow(object):
                 self.label_result.setText(self.label_result.text() + val)
         return 0
 
-    def collection_of_values(self, l_list):
+    def collection_of_values(self, label_str):
+        if label_str == 'Error':
+            raise IncorrectExpression()
+        l_list = list(label_str)
         print(f'{l_list} - original list')  # вывод первоначального списка из строки
         len_l_list = len(l_list)
         if len(l_list) == 0: # если строка пустая
@@ -348,8 +351,7 @@ class Ui_MainWindow(object):
     def results(self):
         try:
             label_str = self.label_result.text()  # получение строки выражения из label
-            label_list = list(label_str)  # перевод строки в список символов
-            num_list = self.collection_of_values(label_list)
+            num_list = self.collection_of_values(label_str)
             result = self.calculation(num_list)
             print(f'Result = {result}')
             self.label_result.setText(str(result))
