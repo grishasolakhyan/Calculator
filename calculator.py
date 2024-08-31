@@ -76,6 +76,7 @@ class Ui_MainWindow(object):
         self.button_clean = btn_object.number_button(41, 204, 81, 40, 'btn clean', cw)
 
         self.button_sqrt = btn_object.number_button(164, 40, 40, 40, 'btn sqrt', cw)
+        self.button_factorial = btn_object.number_button(205, 40, 40, 40, 'btn factorial', cw)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.retranslateUi(MainWindow)
@@ -115,6 +116,7 @@ class Ui_MainWindow(object):
         self.button_clean.setText(_translate("MainWindow", "C"))
 
         self.button_sqrt.setText(_translate("MainWondow", "√"))
+        self.button_factorial.setText(_translate("MainWondow", "!"))
 
     def add_functions(self):
         self.button_1.clicked.connect(lambda: self.main_clicked_method(self.button_1.text()))
@@ -141,6 +143,7 @@ class Ui_MainWindow(object):
         self.button_dot.clicked.connect(lambda: self.main_clicked_method(self.button_dot.text()))
 
         self.button_sqrt.clicked.connect(lambda: self.main_clicked_method(self.button_sqrt.text()))
+        self.button_factorial.clicked.connect(lambda: self.main_clicked_method(self.button_factorial.text()))
 
         self.button_equal.clicked.connect(self.results)
         self.button_clean.clicked.connect(self.clean_results)
@@ -297,6 +300,21 @@ class Ui_MainWindow(object):
                         # raise  IncorrectExpression()
                         continue
 
+                elif '!' in n_list:
+                    if self.isnumeric(n_list[i]) == True and n_list[i + 1] == '!':
+                        num_x = n_list[i]
+                        if num_x < 0:
+                            raise IncorrectExpression()
+                        else:
+                            if num_x%1 != 0:
+                                raise IncorrectExpression()
+                            else:
+                                num_x = int(num_x)
+                                n_list[i] = math.factorial(num_x)
+                                n_list.pop(i + 1)
+                                print(n_list)
+                                break
+
                 elif '^' in n_list: # если есть операция степени
                     if i > 0 and n_list[i] == '^' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
                             n_list[i + 1]) == True:
@@ -350,7 +368,7 @@ class Ui_MainWindow(object):
 
     def results(self):
         try:
-            label_str = self.label_result.text()  # получение строки выражения из label
+            label_str = self.label_result.text()
             num_list = self.collection_of_values(label_str)
             result = self.calculation(num_list)
             print(f'Result = {result}')
