@@ -175,8 +175,11 @@ class Ui_MainWindow(object):
     def backspace(self):
         label_str = self.label_result.text()
         if len(label_str) > 0:
-            label_str_2 = label_str[:-1]
-            self.label_result.setText(label_str_2)
+            if label_str == 'Error':
+                self.label_result.setText("")
+            else:
+                label_str_2 = label_str[:-1]
+                self.label_result.setText(label_str_2)
         return 0
 
     def write_label_string(self, val):
