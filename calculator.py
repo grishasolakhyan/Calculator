@@ -300,6 +300,8 @@ class Ui_MainWindow(object):
             len_n_list = len(n_list)
             if len(num_list) == 1:
                 final_result = num_list[0]
+                if type(final_result) == float and final_result%1 == 0:
+                    final_result = int(final_result)
                 break
 
             for i in range(len_n_list - 1):
