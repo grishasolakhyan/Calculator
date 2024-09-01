@@ -1,7 +1,5 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 import math
-import re
-import random as rn
 
 class EmptyLabelString(Exception): pass
 class IncorrectExpression(Exception): pass
@@ -16,9 +14,6 @@ class Buttons:
         self.btn.setGeometry(QtCore.QRect(x, y, a, b))
         font = QtGui.QFont()
 
-        # button_col = '#bd585c'
-        # text_col = '#ffffff'
-
         self.main_window_obj = Ui_MainWindow()
         font.setFamily(self.main_window_obj.btn_font_style())
         font.setPointSize(self.main_window_obj.btn_font_size())
@@ -29,7 +24,7 @@ class Buttons:
 
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
-        a_size = 40
+        a_size = 60
         b_size = a_size * 2
         row_const = a_size + 1
         col_const = b_size + 1
@@ -56,9 +51,9 @@ class Ui_MainWindow(object):
         self.label_result.setGeometry(QtCore.QRect(0, 0, b_size * 5, a_size))
         font = QtGui.QFont()
         font.setFamily(self.btn_font_style())
-        font.setPointSize(15)
+        font.setPointSize(self.btn_font_size())
         font.setBold(False)
-        font.setWeight(50)
+        font.setWeight(10)
         self.label_result.setFont(font)
         self.label_result.setStyleSheet(f'background-color: {main_back_col}; color: {main_text_col};')
         self.label_result.setObjectName("label_result")
@@ -104,7 +99,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "Калькулятор"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "Calculator"))
         self.label_result.setText(_translate("MainWindow", ""))
 
         self.button_1.setText(_translate("MainWindow", "1"))
@@ -428,11 +423,11 @@ class Ui_MainWindow(object):
         self.label_result.setText("")
 
     def btn_font_style(self):
-        b_fnt_stl="Arial"
+        b_fnt_stl="Franklin Gothic Heavy"
         return b_fnt_stl
 
     def btn_font_size(self):
-        b_fnt_sze=12
+        b_fnt_sze=20
         return b_fnt_sze
 
 if __name__ == "__main__":
