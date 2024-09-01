@@ -164,17 +164,7 @@ class Ui_MainWindow(object):
         self.button_backspace.clicked.connect(self.backspace)
 
     def main_clicked_method(self, value):
-        self.write_label_string(value) # функция отвечающая за написание строки в label
-        return 0
-
-    def backspace(self):
-        label_str = self.label_result.text()
-        if len(label_str) > 0:
-            if label_str == 'Error':
-                self.label_result.setText("")
-            else:
-                label_str_2 = label_str[:-1]
-                self.label_result.setText(label_str_2)
+        self.write_label_string(value)
         return 0
 
     def write_label_string(self, val):
@@ -196,21 +186,21 @@ class Ui_MainWindow(object):
         if label_str == 'Error':
             raise IncorrectExpression()
         l_list = list(label_str)
-        print(f'{l_list} - original list')  # вывод первоначального списка из строки
+        print(f'{l_list} - original list')
         len_l_list = len(l_list)
-        if len(l_list) == 0: # если строка пустая
+        if len(l_list) == 0:
             raise EmptyLabelString()
 
         while True:
             flag1 = True
             len_l_list = len(l_list)
-            for i in range(len_l_list - 1): # перебор списка строки выражения по индексу
+            for i in range(len_l_list - 1):
                 if (l_list[i].isdigit() == True and l_list[i + 1].isdigit() == True) or \
                         ('.' in l_list[i] and l_list[i + 1].isdigit() == True) or \
                         (l_list[i].isdigit() == True and '.' in l_list[
-                            i + 1]):  # если два элемента списка подряд идут числа, точка и число или число и точка
-                    l_list[i] += l_list[i + 1] # добавление соседнего символа из следующего в текущий элемент списка
-                    l_list.pop(i + 1) # удаление следующего элемента
+                            i + 1]):
+                    l_list[i] += l_list[i + 1]
+                    l_list.pop(i + 1)
                     flag1 = True
                     break
                 else:
@@ -225,14 +215,14 @@ class Ui_MainWindow(object):
                 break
 
         len_l_list = len(l_list)
-        for i in range(len_l_list):  # перебор в списке по индексу
-            res = any(chr.isdigit() for chr in l_list[i])  # проверка наличия цифр в элементе
+        for i in range(len_l_list):
+            res = any(chr.isdigit() for chr in l_list[i])
             if res == True:
-                if '.' in l_list[i]:  # если есть точка в числовом элементе
-                    l_list[i] = float(l_list[i])  # перевод в тип float
+                if '.' in l_list[i]:
+                    l_list[i] = float(l_list[i])
                 else:
-                    l_list[i] = int(l_list[i])  # перевод в тип int
-        print(f'{l_list} - new list') # вывод готового текстового списка
+                    l_list[i] = int(l_list[i])
+        print(f'{l_list} - new list')
 
         return l_list
 
@@ -258,7 +248,6 @@ class Ui_MainWindow(object):
             raise IncorrectExpression()
         num_list = self.num_pi_and_e_detection(num_list)
 
-
         while True:
             opened_bracket_count = 0
             closed_bracket_count = 0
@@ -266,9 +255,9 @@ class Ui_MainWindow(object):
             opened_bracket_i = 0
             closed_bracket_i = 0
 
-            if '(' in num_list or ')' in num_list: # поиск скобок и выражения внутри них
+            if '(' in num_list or ')' in num_list:
                 len_num_list = len(num_list)
-                for i in range(len_num_list): # проверка на кол-во открытых и закрытых скобок
+                for i in range(len_num_list):
                     if num_list[i] == '(':
                         opened_bracket_count += 1
                     if num_list[i] == ')':
@@ -277,7 +266,7 @@ class Ui_MainWindow(object):
                     raise IncorrectExpression()
                 else:
                     for i in range(len_num_list - 1):
-                        if (num_list[i] == '(' and num_list[i + 1] == ')') or (num_list[i] == ')' and num_list[i + 1] == '('):  # проверка на корректное указание скобок
+                        if (num_list[i] == '(' and num_list[i + 1] == ')') or (num_list[i] == ')' and num_list[i + 1] == '('):
                             raise IncorrectExpression()
 
 
@@ -305,7 +294,7 @@ class Ui_MainWindow(object):
                 break
 
             for i in range(len_n_list - 1):
-                if '/' in n_list:  # если есть операция деления
+                if '/' in n_list:
                     if i > 0 and n_list[i] == '/' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
                             n_list[i + 1]) == True:
                         print(f'{n_list[i - 1]} / {n_list[i + 1]}')
@@ -345,7 +334,7 @@ class Ui_MainWindow(object):
                                 print(n_list)
                                 break
 
-                elif '^' in n_list: # если есть операция степени
+                elif '^' in n_list:
                     if i > 0 and n_list[i] == '^' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
                             n_list[i + 1]) == True:
                         print(f'{n_list[i - 1]} ^ {n_list[i + 1]}')
@@ -354,7 +343,7 @@ class Ui_MainWindow(object):
                         print(n_list)
                         break
 
-                elif '*' in n_list:  # если есть операция умножения
+                elif '*' in n_list:
                     if i > 0 and n_list[i] == '*' and self.isnumeric(n_list[i - 1]) == True and self.isnumeric(
                             n_list[i + 1]) == True:
                         print(f'{n_list[i - 1]} * {n_list[i + 1]}')
@@ -363,7 +352,7 @@ class Ui_MainWindow(object):
                         print(n_list)
                         break
 
-                elif '+' in n_list or '-' in n_list: # если есть + или -
+                elif '+' in n_list or '-' in n_list:
                     if n_list[0] == '+':
                         n_list[1] = 0 + n_list[1]
                         n_list.pop(0)
@@ -414,15 +403,25 @@ class Ui_MainWindow(object):
             self.label_result.setText('Error')
         return 0
 
-    def isnumeric(self, obj): # функция проверки на тип(числовой) объекта
+    def backspace(self):
+        label_str = self.label_result.text()
+        if len(label_str) > 0:
+            if label_str == 'Error':
+                self.label_result.setText("")
+            else:
+                label_str_2 = label_str[:-1]
+                self.label_result.setText(label_str_2)
+        return 0
+
+    def clean_results(self):
+        self.label_result.setText("")
+
+    def isnumeric(self, obj):
         try:
             obj + 0
             return True
         except:
             return False
-
-    def clean_results(self): # функция отчистки строки
-        self.label_result.setText("")
 
     def btn_font_style(self):
         b_fnt_stl="Franklin Gothic Heavy"
